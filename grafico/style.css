@@ -1,0 +1,105 @@
+*{box-sizing:border-box}
+:root{
+  --green-950:#02120d;
+  --green-900:#031b14;
+  --green-800:#06261c;
+  --green-700:#0a3a2a;
+  --gold:#f5c542;
+  --gold-soft:#d4af37;
+  --text:#f7efd1;
+  --muted:rgba(247,239,209,.68);
+  --line:rgba(245,197,66,.22);
+}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 18% 10%, rgba(245,197,66,.14), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(23,134,91,.24), transparent 34%),
+    linear-gradient(135deg,var(--green-950),var(--green-900) 42%,#000);
+}
+body:before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(120deg,transparent,rgba(245,197,66,.05),transparent);
+}
+.page{
+  width:min(1220px,calc(100% - 32px));
+  margin:0 auto;
+  padding:28px 0 22px;
+}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:22px;
+  margin-bottom:18px;
+}
+.brand{display:flex;align-items:center;gap:18px}
+.coin{
+  width:76px;height:76px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 26%,#fff0aa,var(--gold) 42%,#9a6b08);
+  color:#082015;
+  font-size:25px;font-weight:900;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 14px 38px rgba(245,197,66,.25);
+}
+.eyebrow{margin:0 0 4px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+h1{margin:0;font-size:clamp(24px,3vw,40px);line-height:1.05}
+.price{display:inline-block;margin-top:8px;font-size:clamp(30px,4vw,52px);font-weight:900;color:var(--gold)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end;color:var(--muted);font-size:14px;text-align:right}
+.change{color:#ff8b8b;font-weight:800}.change.up{color:#73e095}
+.controls{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  background:rgba(2,18,13,.72);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:14px;
+  box-shadow:0 18px 60px rgba(0,0,0,.32);
+  backdrop-filter:blur(10px);
+}
+.buttons,.live-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select{
+  height:40px;
+  border:1px solid rgba(245,197,66,.34);
+  border-radius:999px;
+  padding:0 14px;
+  background:rgba(6,38,28,.86);
+  color:var(--text);
+  font-weight:800;
+  box-shadow:0 5px 18px rgba(0,0,0,.18);
+}
+button{cursor:pointer}button:hover,select:hover{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,66,.10)}
+button.active{background:linear-gradient(135deg,var(--gold),#b8860b);color:#06150f;border-color:transparent}
+button.gold{background:linear-gradient(135deg,var(--gold),#b8860b);color:#06150f;border-color:transparent}
+button.ghost{background:transparent}
+button.danger{border-color:rgba(255,140,140,.35);color:#ffd1d1;background:rgba(70,10,10,.35)}
+select{appearance:none;padding-right:18px}
+.chart-card{
+  margin-top:18px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(6,38,28,.98),rgba(3,27,20,.98));
+  box-shadow:0 28px 85px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.03) inset;
+}
+canvas{display:block;width:100%}
+#chart{height:470px}
+#miniChart{height:58px;border-top:1px solid rgba(245,197,66,.12)}
+.status{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+}
+.status.ok{color:#8ff0ad}.status.err{color:#ffabab}.status.warn{color:#ffd985}
+@media(max-width:780px){
+  .top{align-items:flex-start;flex-direction:column}.stats{text-align:left;justify-content:flex-start}.coin{width:62px;height:62px;font-size:21px}.controls{border-radius:18px}.live-actions{width:100%}button,select{flex:1}.buttons button{flex:1 1 auto}
+}
+
+.back-home{display:inline-flex;align-items:center;gap:8px;width:max-content;margin-bottom:18px;padding:12px 18px;border-radius:999px;border:1px solid rgba(245,197,66,.38);background:rgba(2,18,13,.72);color:var(--gold);font-weight:900;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.back-home:hover{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,66,.10),0 14px 36px rgba(0,0,0,.32)}

@@ -7,6 +7,14 @@ let mouse = { x: 0.5, y: 0.35, active: false };
 let particles = [];
 let cursorStars = [];
 
+const isLowPowerDevice =
+  (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+  (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+  window.innerWidth <= 768;
+if (isLowPowerDevice) {
+  document.body.classList.add("lite-mode");
+}
+
 function resizeCanvas() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   w = canvas.width = Math.floor(innerWidth * dpr);
@@ -17,7 +25,9 @@ function resizeCanvas() {
 }
 
 function createParticles() {
-  const count = Math.min(150, Math.floor(innerWidth / 9));
+  const count = isLowPowerDevice
+  ? Math.min(40, Math.floor(innerWidth / 25))
+  : Math.min(150, Math.floor(innerWidth / 9));
   particles = Array.from({ length: count }, () => ({
     x: Math.random() * w,
     y: Math.random() * h,
@@ -142,7 +152,12 @@ document.addEventListener('mousemove', (e) => {
   if (cursorStars.length > 120) cursorStars.splice(0, cursorStars.length - 120);
 });
 resizeCanvas();
-requestAnimationFrame(animate);
+
+if (!isLowPowerDevice) {
+  requestAnimationFrame(animate);
+} else {
+  canvas.style.display = "none";
+}
 
 /* Quotazione oro + conversione grammi/euro */
 const TROY_OUNCE_GRAMS = 31.1035;

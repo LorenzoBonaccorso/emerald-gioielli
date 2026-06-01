@@ -727,3 +727,15 @@
     font-size:28px;
   }
 }
+
+body.lite-mode #luxury-bg,
+body.lite-mode .animated-glow,
+body.lite-mode .intro-loader {
+  display:none !important;
+}
+
+body.lite-mode{
+  background:
+    radial-gradient(circle at top, rgba(245,197,66,.12), transparent 35%),
+    linear-gradient(135deg,#02120d,#031b14 45%,#000);
+}

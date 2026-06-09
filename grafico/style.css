@@ -103,3 +103,14 @@ canvas{display:block;width:100%}
 
 .back-home{display:inline-flex;align-items:center;gap:8px;width:max-content;margin-bottom:18px;padding:12px 18px;border-radius:999px;border:1px solid rgba(245,197,66,.38);background:rgba(2,18,13,.72);color:var(--gold);font-weight:900;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .back-home:hover{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,66,.10),0 14px 36px rgba(0,0,0,.32)}
+
+
+/* Pagina semplice prezzo acquisto 18K */
+.simple-page{display:flex;flex-direction:column;gap:18px;min-height:100vh;justify-content:center}
+.price-card-simple{border:1px solid var(--line);border-radius:30px;padding:34px;background:linear-gradient(180deg,rgba(6,38,28,.98),rgba(3,27,20,.98));box-shadow:0 28px 85px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.03) inset}
+.simple-brand{align-items:center}.price-row small{font-size:24px;color:var(--muted)}
+.simple-info{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(245,197,66,.16);margin-top:18px;padding-top:14px}
+.simple-converter{margin-top:24px;border:1px solid rgba(245,197,66,.18);border-radius:22px;padding:18px;background:rgba(2,18,13,.42)}
+.simple-converter label{display:block;color:var(--gold);font-weight:900;margin-bottom:10px;text-transform:uppercase;font-size:12px;letter-spacing:.12em}
+.converter-row{display:flex;gap:10px;align-items:center}.converter-row input{flex:1;height:46px;border-radius:14px;border:1px solid rgba(245,197,66,.28);background:rgba(0,0,0,.28);color:var(--text);font-size:20px;font-weight:900;padding:0 14px}.unit-pill{height:46px;min-width:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#b8860b);color:#06150f;font-weight:900}.converter-result{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:14px;color:var(--muted)}.converter-result strong{color:var(--gold);font-size:30px}
+@media(max-width:780px){.simple-page{justify-content:flex-start}.price-card-simple{padding:24px}.simple-info,.converter-result{display:grid}.price-row small{font-size:18px}}

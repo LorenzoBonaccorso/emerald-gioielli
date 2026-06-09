@@ -7,14 +7,6 @@ let mouse = { x: 0.5, y: 0.35, active: false };
 let particles = [];
 let cursorStars = [];
 
-const isLowPowerDevice =
-  (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
-  (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
-  window.innerWidth <= 768;
-if (isLowPowerDevice) {
-  document.body.classList.add("lite-mode");
-}
-
 function resizeCanvas() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   w = canvas.width = Math.floor(innerWidth * dpr);
@@ -25,9 +17,7 @@ function resizeCanvas() {
 }
 
 function createParticles() {
-  const count = isLowPowerDevice
-  ? Math.min(40, Math.floor(innerWidth / 25))
-  : Math.min(150, Math.floor(innerWidth / 9));
+  const count = Math.min(150, Math.floor(innerWidth / 9));
   particles = Array.from({ length: count }, () => ({
     x: Math.random() * w,
     y: Math.random() * h,
@@ -152,20 +142,20 @@ document.addEventListener('mousemove', (e) => {
   if (cursorStars.length > 120) cursorStars.splice(0, cursorStars.length - 120);
 });
 resizeCanvas();
+requestAnimationFrame(animate);
 
-if (!isLowPowerDevice) {
-  requestAnimationFrame(animate);
-} else {
-  canvas.style.display = "none";
-}
-
-/* Quotazione oro + conversione grammi/euro */
+/* Prezzo acquisto oro 18K + conversione grammi/euro */
 const TROY_OUNCE_GRAMS = 31.1035;
 const priceElement = document.getElementById('gold-price');
 const updatedElement = document.getElementById('gold-updated');
 const gramsInput = document.getElementById('gold-grams');
 const totalElement = document.getElementById('gold-total');
-let prezzoCorrenteEurGrammo = null;
+const karatTitleElement = document.getElementById('gold-karat-title');
+
+// Prezzo di acquisto 18K: ricavato dal prezzo live dell'oro puro.
+// Il coefficiente 0.655 porta il prezzo vicino a 78 €/g e lo fa salire/scendere con il mercato.
+const COEFFICIENTE_ACQUISTO_18K = 0.655;
+let prezzoAcquisto18EurGrammo = null;
 
 async function caricaCambio() {
   const response = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -179,43 +169,55 @@ async function caricaPrezzoOro() {
   return data.price;
 }
 
-function fallbackPrezzo() {
-  return 123.82 + Math.sin(Date.now() / 420000) * 0.35 + (Math.random() - 0.5) * 0.08;
+function calcolaPrezzoAcquisto18(prezzoOroPuroEurGrammo) {
+  return Math.max(0, prezzoOroPuroEurGrammo * COEFFICIENTE_ACQUISTO_18K);
 }
 
-function formatEuro(value) {
+function fallbackPrezzo() {
+  return 78 + Math.sin(Date.now() / 420000) * 0.18 + (Math.random() - 0.5) * 0.04;
+}
+
+function formatEuroIntero(value) {
   return value.toLocaleString('it-IT', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   });
 }
 
 function aggiornaConversione() {
-  if (!gramsInput || !totalElement || prezzoCorrenteEurGrammo === null) return;
+  if (!gramsInput || !totalElement || prezzoAcquisto18EurGrammo === null) return;
   const grammi = Number(String(gramsInput.value).replace(',', '.')) || 0;
-  const totale = grammi * prezzoCorrenteEurGrammo;
-  totalElement.textContent = `${formatEuro(totale)} €`;
+  const totale = grammi * prezzoAcquisto18EurGrammo;
+  totalElement.textContent = `${formatEuroIntero(totale)} €`;
+}
+
+function aggiornaVistaPrezzo() {
+  if (karatTitleElement) karatTitleElement.textContent = 'Oro 18K';
+  if (priceElement && prezzoAcquisto18EurGrammo !== null) {
+    priceElement.textContent = formatEuroIntero(prezzoAcquisto18EurGrammo);
+  }
+  aggiornaConversione();
 }
 
 async function aggiornaPrezzoLive() {
   try {
-    let prezzoEurGrammo;
+    let prezzo18;
     try {
       const cambioUsdEur = await caricaCambio();
       const prezzoUsdOncia = await caricaPrezzoOro();
-      prezzoEurGrammo = prezzoUsdOncia * cambioUsdEur / TROY_OUNCE_GRAMS;
+      const prezzoOroPuroEurGrammo = prezzoUsdOncia * cambioUsdEur / TROY_OUNCE_GRAMS;
+      prezzo18 = calcolaPrezzoAcquisto18(prezzoOroPuroEurGrammo);
     } catch {
-      prezzoEurGrammo = fallbackPrezzo();
+      prezzo18 = fallbackPrezzo();
     }
 
-    prezzoCorrenteEurGrammo = prezzoEurGrammo;
+    prezzoAcquisto18EurGrammo = prezzo18;
     const ora = new Date();
-    priceElement.textContent = formatEuro(prezzoEurGrammo);
-    updatedElement.textContent = ora.toLocaleTimeString('it-IT');
-    aggiornaConversione();
+    if (updatedElement) updatedElement.textContent = ora.toLocaleTimeString('it-IT');
+    aggiornaVistaPrezzo();
   } catch (error) {
-    priceElement.textContent = 'N/D';
-    updatedElement.textContent = 'Errore';
+    if (priceElement) priceElement.textContent = 'N/D';
+    if (updatedElement) updatedElement.textContent = 'Errore';
     console.error(error);
   }
 }

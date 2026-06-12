@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0PJNESSBXS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0PJNESSBXS');
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emerald Gioielli - Compro Oro Mascali</title>
+  <link rel="icon" type="image/jpeg" href="images/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="intro-loader" aria-hidden="true">
+    <div class="loader-gem"></div>
+    <span>Emerald Gioielli</span>
+  </div>
+
+  <canvas id="luxury-bg" aria-hidden="true"></canvas>
+  <div class="animated-glow"></div>
+
+  <header class="site-header glass-panel">
+    <a class="brand" href="https://www.emeraldgioielli.com/" target="_blank" rel="noopener">
+      <img class="brand-logo-img" src="images/logo.png" alt="Logo Emerald Gioielli" />
+      <div>
+        <h1>Emerald Gioielli</h1>
+        <p>Compro oro · Gioielleria · Orologeria</p>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a class="active" href="https://www.emeraldgioielli.com/" target="_blank" rel="noopener">Home</a>
+      <a href="#valutazione">Valutazione</a>
+      <a href="#dove-siamo">Dove siamo</a>
+      <a class="social-nav instagram" href="https://www.instagram.com/emeraldgioielli?igsh=MWI1MjVyYTk2azh3eg=="
+        target="_blank" rel="noopener">
+        <span class="icon instagram-icon"></span> Instagram
+      </a>
+      <a class="social-nav facebook" href="https://www.facebook.com/share/1G4TkMeWua/" target="_blank" rel="noopener">
+        <span class="icon facebook-icon"></span> Facebook
+      </a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="social-card glass-panel reveal">
+<span class="label">Seguici online</span>
+      <h2>Rimani aggiornato sulle novità <span>Emerald</span></h2>
+      <p>Scopri nuovi arrivi, gioielli selezionati, offerte e aggiornamenti direttamente sui canali social ufficiali
+        della gioielleria.</p>
+      <div class="social-buttons">
+        <a href="https://www.instagram.com/emeraldgioielli?igsh=MWI1MjVyYTk2azh3eg==" target="_blank" rel="noopener"
+          class="instagram-button">
+          <span class="icon instagram-icon"></span> Segui su Instagram
+        </a>
+        <a href="https://www.facebook.com/share/1G4TkMeWua/" target="_blank" rel="noopener" class="facebook-button">
+          <span class="icon facebook-icon"></span> Seguici su Facebook
+        </a>
+      </div>
+    </section>
+
+    <section class="hero-grid reveal">
+      <article class="hero-card glass-panel">
+        <span class="label">Compro oro a Mascali</span>
+        <h2>Scopri il valore del tuo oro con <span>trasparenza, eleganza e fiducia</span></h2>
+        <p>Scopri il prezzo indicativo dell’oro aggiornato automaticamente e richiedi una valutazione dei tuoi
+          preziosi direttamente da Emerald Gioielli.</p>
+        <div class="hero-buttons">
+          <a class="primary-link" href="https://www.emeraldgioielli.com/contatti" target="_blank" rel="noopener">✧
+            Richiedi valutazione</a>
+        </div>
+      </article>
+
+      <section id="quotazione" class="gold-widget glass-panel">
+        <div class="gold-header">
+          <div><span class="label" id="gold-label">Prezzo acquisto indicativo</span>
+            <h2 id="gold-karat-title">Oro 18K</h2>
+          </div>
+          <div class="live-badge"><span class="pulse"></span>LIVE</div>
+        </div>
+        <div class="gold-price"><span id="gold-price">--,--</span><small> €/g</small></div>
+        <div class="minimum-offer" id="minimum-offer">
+          <strong>Offerta calcolata automaticamente per almeno 30 grammi</strong>
+          <span>Il prezzo standard sotto i 30 grammi viene aggiornato in base al mercato.</span>
+        </div>
+        <div class="gold-footer"><span>Aggiornamento automatico ogni 60 secondi</span><span
+            id="gold-updated">--:--:--</span></div>
+
+        <div class="karat-switch" aria-label="Selezione caratura oro">
+          <button type="button" class="karat-option active" data-karat="18">18K acquisto</button>
+          <button type="button" class="karat-option" data-karat="24">24K mercato</button>
+        </div>
+
+
+        <div class="gold-converter" aria-label="Convertitore oro in euro">
+          <label for="gold-grams">Inserisci grammi</label>
+          <div class="converter-row">
+            <input id="gold-grams" type="number" min="0" step="0.01" value="1" inputmode="decimal" />
+            <span class="unit-pill">g</span>
+          </div>
+          <div class="converter-result">
+            <span>Valore indicativo</span>
+            <strong id="gold-total">--,-- €</strong>
+          </div>
+          <p class="converter-note">Calcolo indicativo basato sulla caratura selezionata e aggiornato automaticamente.</p>
+        </div>
+      </section>
+    </section>
+
+    <section id="valutazione" class="valuation-section glass-panel reveal">
+      <div class="valuation-layout">
+        <aside class="valuation-left">
+          <img class="valuation-section-logo" src="images/logo.png" alt="Logo Emerald Gioielli" />
+
+          <div class="valuation-copy">
+            <span class="label">Valutazione preziosi</span>
+            <div class="mini-divider"><span>✦</span></div>
+            <p>Gioielli rotti, oro usato, monete, bracciali, collane e preziosi: Emerald Gioielli ti accoglie per una
+              valutazione chiara, curata e senza impegno.</p>
+          </div>
+        </aside>
+
+        <div class="valuation-title">
+          <h2>Scopri il valore<br />dei tuoi preziosi</h2>
+          <div class="title-divider"><span>✦</span></div>
+        </div>
+
+        <div class="valuation-steps-grid">
+          <article class="valuation-step-card">
+            <span class="step-number">01</span>
+            <div class="service-icon">♢</div>
+            <h3>Presenta i preziosi</h3>
+            <p>Porta in gioielleria ciò che desideri valutare: oro usato, gioielli rotti, monete, bracciali o collane.
+            </p>
+          </article>
+
+          <article class="valuation-step-card">
+            <span class="step-number">02</span>
+            <div class="service-icon">◆</div>
+            <h3>Controllo accurato</h3>
+            <p>Verifica indicativa del materiale e del peso, con attenzione e cura in ogni passaggio.</p>
+          </article>
+
+          <article class="valuation-step-card">
+            <span class="step-number">03</span>
+            <div class="service-icon">✦</div>
+            <h3>Proposta chiara</h3>
+            <p>Ricevi una valutazione trasparente e una proposta semplice, chiara e senza impegno.</p>
+          </article>
+        </div>
+
+        <div class="valuation-cta">
+          <a class="primary-link" href="https://www.emeraldgioielli.com/contatti" target="_blank" rel="noopener">▣
+            Prenota una valutazione</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="dove-siamo" class="location-card glass-panel reveal">
+      <div class="location-info">
+        <span class="label">Dove siamo</span>
+        <h2>Vieni a trovarci in gioielleria</h2>
+        <p>Emerald Gioielli ti aspetta a Mascali per valutazioni, acquisti e consulenze dedicate ai tuoi preziosi.</p>
+        <div class="address-box">
+          <div class="address-icon">⌖</div>
+          <div><strong>Emerald Gioielli</strong>
+            <p>Via Siculo Orientale, 276<br />95016 Mascali CT · Italia</p>
+          </div>
+        </div>
+        <a class="maps-button" href="https://www.google.com/maps?q=Via+Siculo+Orientale+276+95016+Mascali+CT+Italia"
+          target="_blank" rel="noopener">Apri su Google Maps</a>
+      </div>
+      <div class="map-container"><iframe
+          src="https://www.google.com/maps?q=Via+Siculo+Orientale+276+95016+Mascali+CT+Italia&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </section>
+  </main>
+
+  <a class="whatsapp-button" href="https://wa.me/393283768677" target="_blank" rel="noopener" aria-label="Contatta Emerald Gioielli su WhatsApp">
+    <span class="whatsapp-circle" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="img" focusable="false">
+        <path
+          d="M12.04 2a9.85 9.85 0 0 0-8.38 15.02L2.3 22l5.1-1.34A9.86 9.86 0 1 0 12.04 2Zm0 18.02a8.08 8.08 0 0 1-4.13-1.13l-.3-.18-3.03.8.81-2.95-.2-.31A8.06 8.06 0 1 1 12.04 20.02Zm4.63-6.04c-.25-.13-1.49-.74-1.72-.82-.23-.09-.4-.13-.57.13-.17.25-.66.82-.81.99-.15.17-.3.19-.55.06-.25-.13-1.07-.39-2.04-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.38-.44.13-.15.17-.25.25-.42.09-.17.04-.32-.02-.44-.06-.13-.57-1.38-.78-1.89-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.29Z" />
+      </svg>
+    </span><span>Contattaci<br><strong>su WhatsApp</strong></span>
+  </a>
+
+  <footer class="site-footer">Emerald Gioielli · <a href="https://www.emeraldgioielli.com/" target="_blank"
+      rel="noopener">www.emeraldgioielli.com</a></footer>
+  <script src="script.js"></script>
+</body>
+
+</html>

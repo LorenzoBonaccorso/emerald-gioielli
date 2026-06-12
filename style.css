@@ -1,0 +1,1095 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:Inter,Arial,sans-serif;color:#fff7df;background:#020604;overflow-x:hidden}a{color:inherit;text-decoration:none}#luxury-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:-4;background:radial-gradient(circle at 50% 30%,#073d2d 0%,#020604 58%,#000 100%)}.animated-glow{position:fixed;inset:-20%;z-index:-3;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,35%),rgba(0,255,169,.2),transparent 22%),radial-gradient(circle at 20% 20%,rgba(255,205,86,.18),transparent 28%),radial-gradient(circle at 88% 75%,rgba(0,161,102,.2),transparent 30%);filter:blur(18px);animation:aurora 9s ease-in-out infinite alternate}.animated-glow:before,.animated-glow:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 10%,rgba(0,255,170,.18) 26%,rgba(255,211,90,.20) 34%,transparent 46%),linear-gradient(245deg,transparent 42%,rgba(0,190,120,.16) 55%,rgba(255,198,55,.18) 63%,transparent 76%);mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);animation:waveDrift 16s ease-in-out infinite alternate}.animated-glow:after{transform:scaleY(-1);opacity:.75;animation-duration:22s}.site-header,.page,.site-footer,.whatsapp-button{position:relative;z-index:2}.glass-panel{background:linear-gradient(145deg,rgba(1,18,13,.70),rgba(3,9,7,.58));border:1px solid rgba(255,206,77,.34);box-shadow:0 28px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(14px) saturate(1.25)}.site-header{width:min(1420px,calc(100% - 38px));margin:22px auto 0;padding:16px 20px;border-radius:30px;display:flex;align-items:center;justify-content:space-between;gap:22px;position:sticky;top:16px;z-index:50}.brand{display:flex;align-items:center;gap:16px}.brand-logo-img{width:92px;height:66px;object-fit:contain;border-radius:18px;padding:4px;background:rgba(255,255,255,.96);border:1px solid rgba(255,215,106,.55);box-shadow:0 0 35px rgba(0,255,160,.24);animation:logoPulse 3.6s ease-in-out infinite;image-rendering:auto}.brand h1{margin:0;font-family:Georgia,serif;font-size:34px;color:#f8d06b}.brand p{margin:5px 0 0;color:#f5e6bd}.nav-links{display:flex;align-items:center;gap:13px;flex-wrap:wrap}.nav-links a{padding:14px 18px;border-radius:16px;font-weight:700;background:rgba(255,255,255,.045);transition:.25s ease}.nav-links a:hover,.nav-links .active{color:#ffe38a;box-shadow:0 0 28px rgba(255,211,90,.23);transform:translateY(-2px)}.social-nav{display:inline-flex!important;gap:9px;align-items:center;border:1px solid}.social-nav.instagram,.instagram-button{background:linear-gradient(135deg,#c62279,#fb7b3b,#ffd15c)}.social-nav.facebook,.facebook-button{background:linear-gradient(135deg,#073d92,#1078d7)}.icon,.whatsapp-icon{display:inline-block;width:24px;height:24px;background:#fff;mask:center/contain no-repeat;-webkit-mask:center/contain no-repeat}.instagram-icon{mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.1a2.9 2.9 0 1 1 0 5.8 2.9 2.9 0 0 1 0-5.8zM18 6.3a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>')}.facebook-icon{mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.2l.8-4h-4V9c0-.7.3-1 1-1z"/></svg>')}.whatsapp-icon{width:44px;height:44px;mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 2.1 17.4L1 23l5.7-1.5A11.8 11.8 0 0 0 12 22a10 10 0 0 0 8.5-18.5zM12 20a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.4.9.9-3.3-.2-.4A8.2 8.2 0 1 1 12 20zm4.6-6.1c-.3-.1-1.6-.8-1.8-.9s-.4-.1-.6.1-.7.9-.8 1.1-.3.2-.6.1a6.8 6.8 0 0 1-3.3-2.9c-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.4.3-.5.1-.2 0-.4 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.7 1.2 2.9c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.5-.3z"/></svg>')}.page{width:min(1320px,calc(100% - 38px));margin:28px auto 32px;display:grid;gap:28px}.social-card{text-align:center;padding:48px 30px;border-radius:34px;overflow:hidden;position:relative}.social-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 45%,rgba(0,255,169,.11),transparent 35%);opacity:.9}.crown,.label,h2,p,.social-buttons,.hero-buttons,.steps{position:relative}.crown{color:#f8d06b;font-size:26px}.label{display:inline-block;color:#f8d06b;letter-spacing:2px;text-transform:uppercase;font-weight:900;font-size:14px}.social-card h2,.hero-card h2,.location-info h2{font-family:Georgia,serif;margin:12px auto;font-size:clamp(38px,5vw,64px);line-height:1}.social-card h2 span,.hero-card h2 span{color:#ffe38a}.social-card p,.hero-card p,.valuation-card p,.feature-card p,.location-info p{color:#f1e7cc;line-height:1.65;font-size:18px}.social-card p{max-width:760px;margin:auto}.social-buttons,.hero-buttons{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:28px}.instagram-button,.facebook-button,.primary-link,.secondary-link,.maps-button{display:inline-flex;align-items:center;gap:10px;border-radius:16px;padding:15px 25px;font-weight:900;border:1px solid rgba(255,255,255,.35);transition:.25s ease;color:white;box-shadow:0 12px 35px rgba(0,0,0,.28)}.instagram-button:hover,.facebook-button:hover,.primary-link:hover,.secondary-link:hover,.maps-button:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.45),0 0 34px rgba(255,211,90,.25)}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.hero-card,.gold-widget,.valuation-card,.feature-card,.location-card{border-radius:30px;padding:34px}.hero-card{min-height:330px;background-image:linear-gradient(90deg,rgba(2,9,7,.82),rgba(2,9,7,.55)),radial-gradient(circle at 90% 50%,rgba(255,208,80,.22),transparent 36%)}.hero-card h2{margin:12px 0;font-size:clamp(42px,5vw,68px);max-width:780px}.hero-card p{max-width:740px}.primary-link,.maps-button{background:linear-gradient(135deg,#ffd45f,#9a731d);color:#130d03}.secondary-link{background:rgba(0,0,0,.25);border-color:rgba(255,211,90,.55)}.gold-widget{position:relative;overflow:hidden}.gold-widget:after{content:"";position:absolute;right:-40px;bottom:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(255,198,55,.32),transparent 64%);filter:blur(8px);animation:orb 5s ease-in-out infinite}.gold-header{display:flex;justify-content:space-between;gap:16px}.gold-header h2{font-family:Georgia,serif;color:#f8d06b;font-size:32px;margin:8px 0}.live-badge{height:max-content;display:flex;align-items:center;gap:8px;background:rgba(0,255,114,.12);border:1px solid rgba(103,255,157,.38);padding:9px 13px;border-radius:12px}.pulse{width:11px;height:11px;border-radius:50%;background:#1cff68;box-shadow:0 0 12px #1cff68;animation:pulse 1.4s infinite}.gold-price{font-family:Georgia,serif;font-size:70px;font-weight:800;color:#ffe38a;margin:18px 0;text-shadow:0 0 28px rgba(255,211,90,.3)}.gold-price small{font-size:28px;color:#fff7df}.gold-footer{display:flex;justify-content:space-between;gap:10px;color:#f1e7cc;border-top:1px solid rgba(255,255,255,.12);padding-top:14px}.mini-chart{height:120px;margin-top:12px}.valuation-grid{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:18px}.valuation-card{grid-row:span 2}.valuation-card h2{font-family:Georgia,serif;font-size:44px;margin:12px 0}.steps{display:grid;gap:12px;margin:22px 0}.steps div{padding:14px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.steps span{color:#ffe38a;font-weight:900}.steps strong{display:block;margin:4px 0}.steps p{margin:0;font-size:14px}.feature-card{display:grid;align-content:center;min-height:180px;transition:.25s ease}.feature-card:hover{transform:translateY(-6px)}.service-icon,.address-icon{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(145deg,#0bb978,#063b2c);color:#ffe38a;font-size:28px;box-shadow:0 0 28px rgba(0,255,160,.2)}.feature-card h3{color:#f8d06b;font-size:24px;margin:14px 0 8px}.location-card{display:grid;grid-template-columns:1fr 1fr;gap:24px}.address-box{display:flex;gap:16px;margin:20px 0;padding:18px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}.address-box p{margin:4px 0 0}.map-container{border-radius:26px;overflow:hidden;min-height:370px;border:1px solid rgba(255,211,90,.28)}.map-container iframe{width:100%;height:100%;min-height:370px;border:0;filter:saturate(1.1) contrast(1.05)}.whatsapp-button{position:fixed;right:28px;bottom:24px;display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:24px;background:linear-gradient(135deg,#05c866,#039b51);font-weight:900;box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 38px rgba(0,255,126,.45);animation:whatsappFloat 2.6s ease-in-out infinite}.whatsapp-button strong{font-size:18px}.site-footer{text-align:center;color:#dccb96;margin:18px auto 34px}.site-footer a{color:#ffe38a}.reveal{opacity:0;transform:translateY(24px);animation:reveal .8s ease forwards}.reveal:nth-child(2){animation-delay:.12s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.28s}@keyframes reveal{to{opacity:1;transform:none}}@keyframes aurora{0%{transform:translate3d(-2%,0,0) scale(1)}100%{transform:translate3d(2%,2%,0) scale(1.05)}}@keyframes waveDrift{0%{transform:translateX(-14%) skewY(-5deg)}100%{transform:translateX(14%) skewY(5deg)}}@keyframes logoPulse{50%{box-shadow:0 0 45px rgba(255,211,90,.35)}}@keyframes pulse{70%{box-shadow:0 0 0 13px rgba(28,255,104,0)}}@keyframes orb{50%{transform:translate(-25px,-15px) scale(1.1)}}@keyframes whatsappFloat{50%{transform:translateY(-7px)}}
+/* WhatsApp stabile e pulito: icona SVG reale, niente maschere buggate */
+.whatsapp-circle{
+  flex:0 0 auto;
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#ffffff;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.85),0 0 24px rgba(0,255,126,.36);
+}
+.whatsapp-circle svg{
+  width:34px;
+  height:34px;
+  fill:#08b95f;
+  display:block;
+}
+.whatsapp-button{
+  transform:translateZ(0);
+  will-change:transform;
+}
+.whatsapp-button:hover{
+  transform:translateY(-5px) scale(1.02);
+}
+
+/* Evita lampi laterali durante il reset delle onde decorative */
+.animated-glow:before,.animated-glow:after{
+  will-change:transform,opacity;
+}
+@media(max-width:1050px){.site-header{display:grid}.hero-grid,.valuation-grid,.location-card{grid-template-columns:1fr}.valuation-card{grid-row:auto}.brand h1{font-size:26px}.nav-links a{padding:11px 13px}.gold-price{font-size:56px}.whatsapp-button{left:18px;right:18px;justify-content:center}}@media(max-width:640px){.site-header,.page{width:calc(100% - 24px)}.brand-logo-img{width:78px;height:56px}.social-card,.hero-card,.gold-widget,.valuation-card,.feature-card,.location-card{padding:24px}.social-card h2,.hero-card h2{font-size:38px}.nav-links{gap:8px}.whatsapp-button{border-radius:18px}}
+
+
+/* === V8: ritorno alla V6 + solo caricamento iniziale e bordo oro hover === */
+.intro-loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  gap:18px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(0,255,170,.18), transparent 28%),
+    radial-gradient(circle at 50% 60%, rgba(255,215,106,.16), transparent 32%),
+    #020604;
+  pointer-events:none;
+  animation:loaderOut .9s ease 1.45s forwards;
+}
+.intro-loader span{
+  font-family:Georgia,serif;
+  color:#ffe38a;
+  font-size:clamp(28px,4vw,48px);
+  letter-spacing:1px;
+  text-shadow:0 0 28px rgba(255,215,106,.42);
+}
+.loader-gem{
+  width:82px;
+  height:82px;
+  border-radius:28px;
+  position:relative;
+  border:1px solid rgba(255,215,106,.75);
+  background:linear-gradient(135deg,rgba(0,255,170,.32),rgba(255,215,106,.16));
+  box-shadow:
+    0 0 50px rgba(255,215,106,.45),
+    inset 0 0 32px rgba(0,255,170,.32);
+  animation:gemPulse 1.2s ease-in-out infinite alternate;
+}
+.loader-gem::after{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border-radius:18px;
+  background:radial-gradient(circle,#00ffad,transparent 70%);
+  filter:blur(4px);
+  opacity:.7;
+}
+@keyframes loaderOut{
+  to{opacity:0;visibility:hidden;transform:scale(1.02)}
+}
+@keyframes gemPulse{
+  from{transform:rotate(-4deg) scale(.96)}
+  to{transform:rotate(4deg) scale(1.04)}
+}
+
+/* Solo doratura al passaggio mouse: niente resize, niente 3D, niente layout alterato */
+.glass-panel,
+.nav-links a,
+.instagram-button,
+.facebook-button,
+.primary-link,
+.secondary-link,
+.maps-button,
+.whatsapp-button{
+  will-change:border-color, box-shadow;
+}
+.glass-panel:hover{
+  border-color:rgba(255,215,106,.82);
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 0 34px rgba(255,215,106,.18);
+}
+.nav-links a:hover,
+.instagram-button:hover,
+.facebook-button:hover,
+.primary-link:hover,
+.secondary-link:hover,
+.maps-button:hover,
+.whatsapp-button:hover{
+  border-color:rgba(255,215,106,.82);
+}
+
+/* ===== V10 PREMIUM CARD HOVER - SAFE ===== */
+/* 
+   Effetto hover morbido stile V9 applicato SOLO ai blocchi principali.
+   Non tocca navbar/header e non tocca il pulsante WhatsApp, così restano come nella V8.
+*/
+
+.hero-card,
+.gold-widget,
+.chart-card,
+.info-card,
+.location-card,
+.valuation-card,
+.small-service-card,
+.social-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.58s cubic-bezier(.19,1,.22,1),
+    border-color 0.58s ease,
+    box-shadow 0.78s ease,
+    background 0.78s ease,
+    filter 0.58s ease;
+}
+
+.hero-card::after,
+.gold-widget::after,
+.chart-card::after,
+.info-card::after,
+.location-card::after,
+.valuation-card::after,
+.small-service-card::after,
+.social-card::after {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 22%,
+      rgba(255, 215, 106, 0.04) 38%,
+      rgba(255, 255, 255, 0.12) 48%,
+      rgba(255, 215, 106, 0.08) 56%,
+      transparent 74%
+    );
+  transform: translateX(-130%) rotate(10deg);
+  transition:
+    transform 1.15s cubic-bezier(.19,1,.22,1),
+    opacity 0.55s ease;
+}
+
+.hero-card > *,
+.gold-widget > *,
+.chart-card > *,
+.info-card > *,
+.location-card > *,
+.valuation-card > *,
+.small-service-card > *,
+.social-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-card:hover,
+.gold-widget:hover,
+.chart-card:hover,
+.info-card:hover,
+.location-card:hover,
+.valuation-card:hover,
+.small-service-card:hover,
+.social-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 215, 106, 0.68) !important;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.52),
+    0 0 0 1px rgba(255, 215, 106, 0.14),
+    0 0 42px rgba(255, 215, 106, 0.16),
+    inset 0 0 30px rgba(255, 215, 106, 0.035);
+  filter: brightness(1.025);
+}
+
+.hero-card:hover::after,
+.gold-widget:hover::after,
+.chart-card:hover::after,
+.info-card:hover::after,
+.location-card:hover::after,
+.valuation-card:hover::after,
+.small-service-card:hover::after,
+.social-card:hover::after {
+  opacity: 1;
+  transform: translateX(210%) rotate(10deg);
+}
+
+/* Micro-effetto interno su icone dentro le card, senza modificare dimensioni dei bottoni globali */
+.small-service-card:hover .service-icon,
+.location-card:hover .address-icon {
+  box-shadow:
+    0 0 24px rgba(0, 255, 160, 0.20),
+    0 0 26px rgba(255, 215, 106, 0.16);
+  transition: box-shadow 0.6s ease, transform 0.6s cubic-bezier(.19,1,.22,1);
+  transform: translateY(-2px);
+}
+
+/* Su mobile mantengo l'effetto più leggero */
+@media (max-width: 700px) {
+  .hero-card:hover,
+  .gold-widget:hover,
+  .chart-card:hover,
+  .info-card:hover,
+  .location-card:hover,
+  .valuation-card:hover,
+  .small-service-card:hover,
+  .social-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Accessibilità: riduce gli effetti se richiesto dal sistema */
+@media (prefers-reduced-motion: reduce) {
+  .hero-card,
+  .gold-widget,
+  .chart-card,
+  .info-card,
+  .location-card,
+  .valuation-card,
+  .small-service-card,
+  .social-card,
+  .hero-card::after,
+  .gold-widget::after,
+  .chart-card::after,
+  .info-card::after,
+  .location-card::after,
+  .valuation-card::after,
+  .small-service-card::after,
+  .social-card::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+
+
+/* Convertitore grammi/euro al posto del mini grafico */
+.gold-converter{
+  position:relative;
+  z-index:2;
+  margin-top:22px;
+  padding:18px;
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,211,90,.10),rgba(0,0,0,.18));
+  border:1px solid rgba(255,211,90,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 35px rgba(0,0,0,.22);
+}
+.gold-converter label{
+  display:block;
+  color:#f8d06b;
+  font-weight:900;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  font-size:13px;
+  margin-bottom:10px;
+}
+.converter-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+#gold-grams{
+  width:100%;
+  min-width:0;
+  height:54px;
+  border-radius:16px;
+  border:1px solid rgba(255,211,90,.42);
+  background:rgba(1,18,13,.78);
+  color:#fff7df;
+  font-size:24px;
+  font-weight:900;
+  padding:0 16px;
+  outline:none;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.28);
+}
+#gold-grams:focus{
+  border-color:#ffe38a;
+  box-shadow:0 0 0 4px rgba(255,211,90,.12), inset 0 0 18px rgba(0,0,0,.28);
+}
+.unit-pill{
+  height:54px;
+  min-width:54px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:linear-gradient(135deg,#ffd45f,#9a731d);
+  color:#130d03;
+  font-weight:900;
+  font-size:22px;
+}
+.converter-result{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.12);
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:14px;
+}
+.converter-result span{
+  color:#f1e7cc;
+  font-size:15px;
+}
+.converter-result strong{
+  color:#ffe38a;
+  font-family:Georgia,serif;
+  font-size:clamp(32px,4vw,48px);
+  line-height:1;
+  white-space:nowrap;
+  text-shadow:0 0 22px rgba(255,211,90,.22);
+}
+.converter-note{
+  margin:12px 0 0;
+  color:#dccb96!important;
+  font-size:13px!important;
+  line-height:1.4!important;
+}
+@media(max-width:640px){
+  .converter-result{align-items:flex-start;flex-direction:column}
+  .converter-result strong{white-space:normal}
+}
+
+/* V12 - Sezione valutazione ristrutturata: tre step grandi, senza spazio vuoto */
+.valuation-section{
+  position:relative;
+  overflow:hidden;
+  border-radius:34px;
+  padding:36px;
+  display:grid;
+  gap:26px;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255,211,90,.14), transparent 30%),
+    radial-gradient(circle at 84% 74%, rgba(0,255,169,.12), transparent 32%),
+    linear-gradient(145deg,rgba(1,18,13,.78),rgba(3,9,7,.62));
+}
+.valuation-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 12%,rgba(255,215,106,.10) 34%,transparent 55%);
+  opacity:.55;
+}
+.valuation-section > *{position:relative;z-index:1}
+.valuation-intro{
+  display:grid;
+  grid-template-columns:minmax(280px,.85fr) 1fr;
+  gap:28px;
+  align-items:end;
+}
+.valuation-intro h2{
+  font-family:Georgia,serif;
+  font-size:clamp(38px,5vw,64px);
+  line-height:1;
+  margin:10px 0 0;
+  max-width:620px;
+}
+.valuation-intro p{
+  margin:0;
+  color:#f1e7cc;
+  font-size:18px;
+  line-height:1.65;
+  max-width:650px;
+}
+.valuation-steps-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.valuation-step-card{
+  position:relative;
+  min-height:260px;
+  overflow:hidden;
+  padding:30px;
+  border-radius:28px;
+  background:linear-gradient(145deg,rgba(1,18,13,.76),rgba(1,45,31,.42));
+  border:1px solid rgba(255,211,90,.34);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 50px rgba(0,0,0,.30);
+  transition:transform .55s cubic-bezier(.19,1,.22,1), border-color .55s ease, box-shadow .55s ease, background .55s ease;
+}
+.valuation-step-card::before{
+  content:attr(data-glow);
+  position:absolute;
+  inset:auto -30px -50px auto;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,211,90,.22),transparent 66%);
+  filter:blur(6px);
+  opacity:.7;
+}
+.valuation-step-card::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-70%;
+  width:54%;
+  height:180%;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+  transform:rotate(12deg);
+  opacity:0;
+  transition:opacity .55s ease, transform .9s cubic-bezier(.19,1,.22,1);
+}
+.valuation-step-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(255,225,126,.72);
+  background:linear-gradient(145deg,rgba(4,34,24,.88),rgba(5,62,42,.58));
+  box-shadow:0 28px 75px rgba(0,0,0,.42),0 0 42px rgba(255,211,90,.16),inset 0 1px 0 rgba(255,255,255,.10);
+}
+.valuation-step-card:hover::after{
+  opacity:1;
+  transform:translateX(285%) rotate(12deg);
+}
+.valuation-step-card .step-number{
+  position:absolute;
+  right:20px;
+  top:10px;
+  font-family:Georgia,serif;
+  font-size:92px;
+  line-height:1;
+  font-weight:900;
+  color:rgba(255,211,90,.12);
+  pointer-events:none;
+}
+.valuation-step-card .service-icon{
+  position:relative;
+  z-index:1;
+  margin-bottom:28px;
+}
+.valuation-step-card h3{
+  position:relative;
+  z-index:1;
+  color:#ffe38a;
+  font-size:clamp(25px,2.3vw,34px);
+  line-height:1.05;
+  margin:0 0 14px;
+}
+.valuation-step-card p{
+  position:relative;
+  z-index:1;
+  color:#f1e7cc;
+  font-size:17px;
+  line-height:1.65;
+  margin:0;
+}
+.valuation-cta{
+  display:flex;
+  justify-content:center;
+  padding-top:2px;
+}
+@media(max-width:1050px){
+  .valuation-intro{grid-template-columns:1fr;align-items:start}
+  .valuation-steps-grid{grid-template-columns:1fr}
+  .valuation-step-card{min-height:auto}
+}
+@media(max-width:640px){
+  .valuation-section{padding:24px;border-radius:28px}
+  .valuation-step-card{padding:24px}
+  .valuation-step-card .step-number{font-size:70px}
+}
+
+
+/* V15 - sezione valutazione come mockup */
+.valuation-section{
+  border-radius:34px;
+  padding:0;
+  overflow:hidden;
+  position:relative;
+}
+
+.valuation-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 30% 35%, rgba(255,211,90,.11), transparent 26%),
+    radial-gradient(circle at 78% 38%, rgba(0,255,170,.09), transparent 34%);
+  z-index:0;
+}
+
+.valuation-layout{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:390px 1fr;
+  grid-template-areas:
+    "left title"
+    "steps steps"
+    "cta cta";
+  column-gap:70px;
+  row-gap:34px;
+  padding:38px 42px 34px;
+}
+
+.valuation-left{
+  grid-area:left;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:34px;
+}
+
+.valuation-section-logo{
+  width:150px;
+  height:auto;
+  border-radius:24px;
+  padding:7px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,215,106,.55);
+  box-shadow:0 0 34px rgba(0,255,160,.18),0 18px 45px rgba(0,0,0,.32);
+}
+
+.valuation-copy{
+  width:100%;
+  max-width:360px;
+}
+
+.valuation-copy .label{
+  display:block;
+  color:#ffdc74;
+  letter-spacing:2.6px;
+  font-size:15px;
+  margin-bottom:12px;
+}
+
+.mini-divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:260px;
+  margin:0 0 24px;
+  color:#ffdc74;
+}
+
+.mini-divider::before,
+.mini-divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:rgba(255,215,106,.45);
+}
+
+.valuation-copy p{
+  margin:0;
+  color:#fff5d6;
+  font-size:20px;
+  line-height:1.62;
+  text-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+
+.valuation-title{
+  grid-area:title;
+  align-self:center;
+  justify-self:center;
+  width:100%;
+  max-width:700px;
+  text-align:center;
+  padding-top:20px;
+}
+
+.valuation-title h2{
+  margin:0;
+  font-family:Georgia,serif;
+  font-size:clamp(58px,6.2vw,88px);
+  line-height:.96;
+  color:#fff7df;
+  text-shadow:0 10px 26px rgba(0,0,0,.36);
+}
+
+.title-divider{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  width:min(430px,70%);
+  margin:34px auto 0;
+  color:#ffdc74;
+}
+
+.title-divider::before,
+.title-divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:rgba(255,215,106,.42);
+}
+
+.valuation-steps-grid{
+  grid-area:steps;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+.valuation-step-card{
+  position:relative;
+  min-height:265px;
+  padding:38px 34px 30px;
+  border-radius:26px;
+  border:1px solid rgba(255,211,90,.46);
+  background:
+    radial-gradient(circle at 72% 84%, rgba(255,211,90,.10), transparent 38%),
+    linear-gradient(145deg, rgba(1,25,17,.88), rgba(0,9,7,.72));
+  box-shadow:0 22px 60px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.06);
+  overflow:hidden;
+}
+
+.valuation-step-card .service-icon{
+  width:62px;
+  height:62px;
+  border-radius:19px;
+  margin-bottom:28px;
+}
+
+.valuation-step-card .step-number{
+  position:absolute;
+  top:20px;
+  right:26px;
+  font-family:Georgia,serif;
+  font-size:78px;
+  line-height:1;
+  font-weight:900;
+  color:rgba(255,215,106,.12);
+}
+
+.valuation-step-card h3{
+  margin:0 0 16px;
+  color:#ffe486;
+  font-size:34px;
+  line-height:1.08;
+}
+
+.valuation-step-card p{
+  margin:0;
+  color:#fff6dc;
+  font-size:18px;
+  line-height:1.64;
+}
+
+.valuation-cta{
+  grid-area:cta;
+  display:flex;
+  justify-content:center;
+  margin-top:0;
+}
+
+.valuation-cta .primary-link{
+  min-width:340px;
+  justify-content:center;
+  font-size:18px;
+}
+
+@media(max-width:1050px){
+  .valuation-layout{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "left"
+      "title"
+      "steps"
+      "cta";
+    padding:30px 22px;
+    row-gap:26px;
+  }
+
+  .valuation-left{
+    gap:22px;
+  }
+
+  .valuation-copy,
+  .valuation-copy p{
+    max-width:100%;
+  }
+
+  .valuation-title{
+    text-align:left;
+    justify-self:start;
+    padding-top:0;
+  }
+
+  .title-divider{
+    margin-left:0;
+  }
+
+  .valuation-steps-grid{
+    grid-template-columns:1fr;
+  }
+
+  .valuation-cta .primary-link{
+    min-width:0;
+    width:100%;
+  }
+}
+
+@media(max-width:640px){
+  .valuation-title h2{
+    font-size:42px;
+  }
+
+  .valuation-copy p,
+  .valuation-step-card p{
+    font-size:16px;
+  }
+
+  .valuation-step-card h3{
+    font-size:28px;
+  }
+}
+
+/* V20 - switch 18K/24K dentro la homepage, senza pagina grafico */
+.karat-switch{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.karat-option{
+  flex:1;
+  min-width:140px;
+  border:1px solid rgba(255,211,90,.38);
+  border-radius:999px;
+  padding:12px 14px;
+  background:rgba(0,0,0,.22);
+  color:#fff7df;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.24);
+  transition:.22s ease;
+}
+.karat-option:hover{
+  border-color:#ffe38a;
+  box-shadow:0 0 0 4px rgba(255,211,90,.10),0 12px 30px rgba(0,0,0,.28);
+}
+.karat-option.active{
+  background:linear-gradient(135deg,#ffd45f,#9a731d);
+  color:#130d03;
+  border-color:transparent;
+}
+body.lite-mode #luxury-bg,
+body.lite-mode .animated-glow,
+body.lite-mode .intro-loader{
+  display:none!important;
+}
+body.lite-mode{
+  background:
+    radial-gradient(circle at top,rgba(245,197,66,.12),transparent 35%),
+    linear-gradient(135deg,#02120d,#031b14 45%,#000);
+}
+body.lite-mode .glass-panel{
+  backdrop-filter:none;
+}
+
+
+/* === V25: fix logo, hero spacing e testo più elegante === */
+.crown{display:none!important;}
+
+.brand-logo-img{
+  width:110px!important;
+  height:auto!important;
+  max-height:72px!important;
+  object-fit:contain!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  animation:none!important;
+}
+
+.site-header .brand{
+  gap:18px!important;
+  min-width:0;
+}
+
+.site-header{
+  align-items:center!important;
+}
+
+.hero-card{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:520px!important;
+  padding:54px 54px!important;
+}
+
+.hero-card .label{
+  margin-bottom:10px!important;
+}
+
+.hero-card h2{
+  max-width:920px!important;
+  margin:0 0 24px!important;
+  font-size:clamp(44px,4.5vw,76px)!important;
+  line-height:1.04!important;
+  letter-spacing:-.025em!important;
+}
+
+.hero-card p{
+  max-width:880px!important;
+  margin:0 0 28px!important;
+  font-size:20px!important;
+  line-height:1.58!important;
+}
+
+.hero-buttons{
+  justify-content:flex-start!important;
+  margin-top:4px!important;
+}
+
+.valuation-section-logo{
+  width:170px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+.valuation-title{
+  align-self:center!important;
+  padding-top:0!important;
+}
+
+.valuation-title h2{
+  font-size:clamp(52px,5.4vw,82px)!important;
+  line-height:1.02!important;
+}
+
+@media(max-width:1050px){
+  .hero-card{
+    min-height:auto!important;
+    padding:38px 30px!important;
+  }
+  .hero-card h2{
+    font-size:clamp(40px,8vw,64px)!important;
+  }
+  .brand-logo-img{
+    width:94px!important;
+    max-height:62px!important;
+  }
+}
+
+@media(max-width:640px){
+  .hero-card{
+    padding:30px 24px!important;
+  }
+  .hero-card h2{
+    font-size:36px!important;
+    line-height:1.08!important;
+  }
+  .hero-card p{
+    font-size:16px!important;
+  }
+  .brand-logo-img{
+    width:82px!important;
+    max-height:54px!important;
+  }
+  .valuation-section-logo{
+    width:130px!important;
+  }
+}
+
+
+/* === V26 final: logo non schiacciato + titolo valutazione equilibrato === */
+.brand-logo-img{
+  width: 104px !important;
+  height: 68px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.valuation-section-logo{
+  width: 190px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.valuation-layout{
+  min-height: 760px !important;
+  align-items: center !important;
+  row-gap: 22px !important;
+}
+
+.valuation-left{
+  justify-content: center !important;
+  gap: 26px !important;
+}
+
+.valuation-title{
+  align-self: center !important;
+  padding-top: 0 !important;
+  transform: translateY(26px);
+}
+
+.valuation-title h2{
+  font-size: clamp(54px, 5.3vw, 76px) !important;
+  line-height: .98 !important;
+  max-width: 680px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.title-divider{
+  margin-top: 28px !important;
+}
+
+.valuation-steps-grid{
+  margin-top: 8px !important;
+}
+
+.valuation-step-card h3{
+  font-size: clamp(25px, 2.2vw, 32px) !important;
+}
+
+.crown{
+  display: none !important;
+}
+
+@media(max-width:1050px){
+  .brand-logo-img{
+    width: 92px !important;
+    height: 60px !important;
+  }
+  .valuation-layout{
+    min-height: auto !important;
+  }
+  .valuation-title{
+    transform: none !important;
+  }
+  .valuation-title h2{
+    font-size: clamp(42px, 9vw, 58px) !important;
+    text-align: left !important;
+  }
+  .valuation-section-logo{
+    width: 160px !important;
+  }
+}
+
+@media(max-width:640px){
+  .brand-logo-img{
+    width: 78px !important;
+    height: 52px !important;
+  }
+  .valuation-title h2{
+    font-size: 40px !important;
+  }
+  .valuation-section-logo{
+    width: 138px !important;
+  }
+}
+
+
+/* V28 - Logo navbar vecchio, logo sezione sotto invariato */
+.brand-logo-img{
+  width: 96px !important;
+  height: 76px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  padding: 5px !important;
+  background: rgba(255,255,255,.96) !important;
+  border: 1px solid rgba(255,215,106,.55) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 0 35px rgba(0,255,160,.24) !important;
+}
+
+/* La sezione valutazione usa ancora il logo grande PNG già corretto */
+.valuation-section-logo{
+  object-fit: contain !important;
+}
+
+
+/* V29 - logo navbar più grande */
+.brand-logo-img{
+    width:140px !important;
+    height:auto !important;
+    max-height:100px !important;
+    object-fit:contain !important;
+}
+
+
+/* V30 - Navbar con lo stesso logo PNG della sezione sotto */
+.brand{
+  gap: 24px !important;
+}
+
+.brand-logo-img{
+  width: 190px !important;
+  height: auto !important;
+  max-height: 116px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.site-header{
+  min-height: 128px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+@media(max-width:1050px){
+  .brand-logo-img{
+    width: 160px !important;
+    max-height: 98px !important;
+  }
+}
+
+@media(max-width:640px){
+  .brand-logo-img{
+    width: 120px !important;
+    max-height: 76px !important;
+  }
+  .brand{
+    gap: 14px !important;
+  }
+}
+
+
+/* V32 - offerta minimo 30 grammi stile card live */
+.minimum-offer{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:360px;
+  margin: -6px 0 18px;
+  padding:13px 16px;
+  border-radius:18px;
+  border:1px solid rgba(255,211,90,.32);
+  background:rgba(255,211,90,.08);
+  color:#f1e7cc;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.minimum-offer strong{
+  display:block;
+  color:#ffe38a;
+  font-size:15px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+.minimum-offer span{
+  display:block;
+  font-size:13px;
+  line-height:1.35;
+  color:#dccb96;
+}
+@media(max-width:640px){
+  .minimum-offer{
+    max-width:none;
+  }
+}

@@ -1,0 +1,57 @@
+name: Aggiorna quotazioni e pubblica sito
+
+on:
+  push:
+    branches: [main, master]
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+
+      - name: Prepara Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Aggiorna oro, argento e cambio
+        env:
+          TICKBASE_API_KEY: ${{ secrets.TICKBASE_API_KEY }}
+        run: node scripts/update-market-prices.mjs
+
+      - name: Prepara i file pubblici
+        run: |
+          mkdir -p dist
+          cp index.html script.js style.css dist/
+          cp -R images data dist/
+          if [ -f CNAME ]; then cp CNAME dist/; fi
+          touch dist/.nojekyll
+
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Carica il sito
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Pubblica il sito
+        id: deployment
+        uses: actions/deploy-pages@v4

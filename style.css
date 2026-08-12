@@ -456,3 +456,204 @@ button, input { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
+
+/* v93 — Emerald heritage, without the performance cost of the legacy theme */
+body {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(45, 142, 93, .22), transparent 32rem),
+    radial-gradient(circle at 92% 28%, rgba(17, 102, 72, .16), transparent 36rem),
+    linear-gradient(145deg, #07150e, #020806 72%);
+}
+
+body::before {
+  opacity: .32;
+  background-image:
+    linear-gradient(rgba(213, 185, 112, .028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(213, 185, 112, .028) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.site-header {
+  top: 12px;
+  width: min(1320px, calc(100% - 32px));
+  min-height: 84px;
+  margin: 12px auto 0;
+  padding: 10px 18px;
+  border: 1px solid rgba(213, 185, 112, .26);
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(7, 33, 22, .96), rgba(3, 18, 12, .96));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .24);
+}
+
+.brand-logo-shell {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  overflow: hidden;
+  border: 2px solid rgba(226, 199, 128, .55);
+  border-radius: 50%;
+  background: #f4f0e8;
+  box-shadow: 0 0 0 5px rgba(213, 185, 112, .06);
+}
+
+.brand-logo-img { width: 100%; height: 100%; object-fit: cover; }
+.brand-title { color: var(--gold-light); font-size: 22px; }
+.brand p { color: #b9b6ab; }
+.nav-links a { border-radius: 12px; }
+.nav-links a:hover, .nav-links a.active { background: rgba(213, 185, 112, .07); }
+.nav-links .nav-cta { border-radius: 13px; background: linear-gradient(135deg, #efd88e, #cda84f); box-shadow: 0 8px 24px rgba(205, 168, 79, .14); }
+
+.page { padding-top: 48px; }
+.page > section { margin-bottom: 72px; }
+
+.hero-editorial {
+  min-height: 580px;
+  padding: 70px clamp(46px, 6vw, 78px);
+  border-color: rgba(213, 185, 112, .34);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 82% 42%, rgba(32, 155, 96, .2), transparent 25rem),
+    linear-gradient(128deg, #0c2c1d, #06140e 68%);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.hero-editorial::after {
+  content: "";
+  position: absolute;
+  right: -90px;
+  bottom: -120px;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(213, 185, 112, .1);
+  border-radius: 50%;
+  box-shadow: 0 0 0 70px rgba(213, 185, 112, .025), 0 0 0 140px rgba(213, 185, 112, .018);
+  pointer-events: none;
+}
+
+.hero-editorial-copy { z-index: 2; }
+.hero-seal {
+  position: relative;
+  z-index: 2;
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: min(190px, 100%);
+  aspect-ratio: 1;
+  margin-left: auto;
+  overflow: hidden;
+  border: 8px solid rgba(240, 220, 165, .09);
+  border-radius: 50%;
+  background: #f4f0e8;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .32), 0 0 0 1px rgba(226, 199, 128, .45);
+}
+.hero-seal img { width: 100%; height: 100%; object-fit: cover; }
+.hero-editorial-mark > div { position: relative; z-index: 2; }
+
+.primary-link, .maps-button, .valuation-booking-link {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #efd88e, #cda84f);
+  box-shadow: 0 10px 25px rgba(205, 168, 79, .12);
+}
+.secondary-link, .jewellery-shop-button, .calculator-toggle-button { border-radius: 12px; }
+
+.metals-dashboard {
+  padding: clamp(34px, 5vw, 64px);
+  border: 1px solid rgba(213, 185, 112, .24);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(35, 133, 86, .13), transparent 28rem),
+    linear-gradient(145deg, rgba(9, 35, 23, .97), rgba(4, 17, 11, .97));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+}
+.simple-metal-panel {
+  border-color: rgba(255, 255, 255, .12);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(7, 30, 20, .95), rgba(2, 14, 9, .96));
+}
+.simple-metal-panel.active {
+  border-color: rgba(226, 199, 128, .55);
+  box-shadow: inset 0 0 0 1px rgba(213, 185, 112, .08), 0 18px 42px rgba(0, 0, 0, .16);
+}
+.gold-karat-switch, .asset-switch, .metals-converter, .converter-input-block, .converter-result-block { border-radius: 14px; }
+.gold-karat-option, .asset-option { border-radius: 10px; }
+.simple-offer-box { border-radius: 0 12px 12px 0; }
+.live-badge { background: rgba(42, 172, 106, .08); box-shadow: inset 0 0 18px rgba(42, 172, 106, .05); }
+
+.valuation-section {
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(213, 185, 112, .18), transparent 22rem),
+    linear-gradient(135deg, #f3efe5, #dfd6c6);
+  box-shadow: 0 26px 76px rgba(0, 0, 0, .25);
+}
+.valuation-step-card {
+  margin-top: 14px;
+  padding: 26px 22px 24px;
+  border: 1px solid rgba(20, 34, 25, .14);
+  border-right: 0;
+  background: rgba(255, 255, 255, .25);
+}
+.valuation-step-card:first-child { border-radius: 18px 0 0 18px; }
+.valuation-step-card:last-child { border-right: 1px solid rgba(20, 34, 25, .14); border-radius: 0 18px 18px 0; }
+.service-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  border-radius: 12px;
+  color: #f5e4ad;
+  background: linear-gradient(145deg, #278158, #116540);
+  box-shadow: 0 8px 20px rgba(17, 101, 64, .16);
+}
+
+.method-section, .jewellery-card, .social-card, .location-card {
+  border-color: rgba(213, 185, 112, .22);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 22px 64px rgba(0, 0, 0, .2);
+}
+.method-section { background: linear-gradient(140deg, #0b2519, #06150e); }
+.faq-list details { margin-bottom: 10px; padding: 0 20px; border: 1px solid rgba(213, 185, 112, .16); border-radius: 15px; background: rgba(9, 29, 20, .68); }
+.faq-list { border-top: 0; }
+.jewellery-visual { background: radial-gradient(circle, #f3ead4, #c8b88f); }
+.social-card { background: radial-gradient(circle at 50% 0%, rgba(31, 140, 88, .16), transparent 24rem), #081b12; }
+.map-consent { background: radial-gradient(circle, #eee5d2, #cfc2a6); }
+.contact-cta {
+  border: 1px solid rgba(213, 185, 112, .24);
+  border-radius: 28px;
+  background: radial-gradient(circle at 50% 0%, rgba(31, 140, 88, .17), transparent 28rem), linear-gradient(145deg, #0a2619, #06120d);
+  box-shadow: 0 22px 64px rgba(0, 0, 0, .2);
+}
+
+.whatsapp-button { background: linear-gradient(145deg, #22a56e, #117649); }
+.cookie-banner { border-radius: 18px; background: linear-gradient(145deg, #0b281b, #06170f); }
+
+@media (max-width: 1040px) {
+  .site-header { width: calc(100% - 24px); }
+  .valuation-step-card:nth-child(2) { border-right: 1px solid rgba(20, 34, 25, .14); border-radius: 0 18px 18px 0; }
+  .valuation-step-card:nth-child(3) { border-radius: 18px 0 0 18px; }
+}
+
+@media (max-width: 820px) {
+  .site-header { top: 8px; margin-top: 8px; }
+  .nav-links { border-radius: 18px; }
+  .hero-editorial { padding: 58px 36px; }
+  .valuation-step-card:nth-child(-n+2) { border-bottom: 1px solid rgba(20, 34, 25, .14); }
+}
+
+@media (max-width: 560px) {
+  .site-header { width: calc(100% - 16px); min-height: 70px; padding: 7px 10px; border-radius: 18px; }
+  .brand-logo-shell { width: 44px; height: 44px; }
+  .brand-title { font-size: 18px; }
+  .page { padding-top: 28px; }
+  .hero-editorial, .metals-dashboard, .valuation-section, .method-section, .jewellery-card, .social-card, .location-card, .contact-cta { border-radius: 22px; }
+  .hero-editorial { padding: 50px 23px; }
+  .valuation-step-card,
+  .valuation-step-card:first-child,
+  .valuation-step-card:nth-child(2),
+  .valuation-step-card:nth-child(3),
+  .valuation-step-card:last-child { border: 1px solid rgba(20, 34, 25, .14); border-radius: 14px; margin-top: 8px; }
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://comprooro.emeraldgioielli.com/sitemap.xml

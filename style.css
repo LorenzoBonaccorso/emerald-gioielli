@@ -1411,7 +1411,7 @@ button {
   transform: translateX(-50%);
 }
 
-.cookie-banner > div:first-child {
+.cookie-copy {
   max-width: 470px;
 }
 
@@ -1426,6 +1426,22 @@ button {
   color: var(--text-soft);
   font-size: 11px;
   line-height: 1.5;
+}
+
+.cookie-banner .cookie-current-choice {
+  margin-top: 8px;
+  color: var(--gold-soft);
+  font-weight: 700;
+}
+
+.cookie-policy-link {
+  display: inline-flex;
+  margin-top: 7px;
+  color: var(--gold-bright);
+  font-size: 11px;
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 213, 128, .45);
+  text-underline-offset: 3px;
 }
 
 .cookie-actions {
@@ -1854,6 +1870,11 @@ button {
   .cookie-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .cookie-actions button {
+    min-width: 0;
+    white-space: normal;
   }
 
   .whatsapp-button {

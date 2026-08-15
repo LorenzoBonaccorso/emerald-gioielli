@@ -17,7 +17,19 @@ test('Analytics e Maps non vengono caricati prima di una scelta esplicita', asyn
  assert.doesNotMatch(html, /<script[^>]+googletagmanager/);
  assert.doesNotMatch(html, /<iframe[^>]+google\.com\/maps/);
  assert.match(html, /id="cookie-accept"/);
+ assert.match(html, /id="cookie-reject"/);
+ assert.match(html, /Solo necessari/);
+ assert.match(html, /Accetta analytics/);
  assert.match(html, /id="map-load"/);
+});
+
+test('la preferenza cookie è revocabile e Analytics resta opzionale', async () => {
+ const [html, script] = await Promise.all([read('index.html'), read('script.js')]);
+ assert.match(html, /id="cookie-manage"/);
+ assert.match(html, /Privacy e cookie/);
+ assert.match(script, /emerald_cookie_consent/);
+ assert.match(script, /analytics_storage: 'denied'/);
+ assert.match(script, /if \(consent === 'analytics'\) loadAnalytics\(\)/);
 });
 
 test('il deployment include robots, sitemap e moduli applicativi', async () => {

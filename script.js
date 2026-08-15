@@ -820,7 +820,46 @@ window.addEventListener('load', () => {
  const acceptButton = document.getElementById('cookie-accept');
  const rejectButton = document.getElementById('cookie-reject');
  const manageButton = document.getElementById('cookie-manage');
- const consentKey = 'emerald-analytics-consent-v1';
+ const currentChoice = document.getElementById('cookie-current-choice');
+ const consentCookie = 'emerald_cookie_consent';
+ const legacyStorageKey = 'emerald-analytics-consent-v1';
+ const consentMaxAge = 60 * 60 * 24 * 180;
+
+ function readConsentCookie() {
+  const prefix = `${consentCookie}=`;
+  const match = document.cookie.split(';').map(value => value.trim()).find(value => value.startsWith(prefix));
+  return match ? decodeURIComponent(match.slice(prefix.length)) : null;
+ }
+
+ function writeConsentCookie(value) {
+  const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${consentCookie}=${encodeURIComponent(value)}; Max-Age=${consentMaxAge}; Path=/; SameSite=Lax${secure}`;
+ }
+
+ function readConsent() {
+  const cookieValue = readConsentCookie();
+  if (cookieValue === 'analytics' || cookieValue === 'necessary') return cookieValue;
+
+  try {
+   const legacyValue = localStorage.getItem(legacyStorageKey);
+   if (legacyValue === 'accepted' || legacyValue === 'rejected') {
+    const migratedValue = legacyValue === 'accepted' ? 'analytics' : 'necessary';
+    writeConsentCookie(migratedValue);
+    localStorage.removeItem(legacyStorageKey);
+    return migratedValue;
+   }
+  } catch (error) {}
+
+  return null;
+ }
+
+ function showCurrentChoice(value) {
+  if (!currentChoice) return;
+  currentChoice.textContent = value === 'analytics'
+   ? 'Scelta attuale: cookie necessari e analytics.'
+   : 'Scelta attuale: solo cookie necessari.';
+  currentChoice.hidden = !value;
+ }
 
  function updateGoogleConsent(value) {
   if (typeof window.gtag !== 'function') return;
@@ -840,10 +879,16 @@ window.addEventListener('load', () => {
    ad_storage: 'denied',
    ad_user_data: 'denied',
    ad_personalization: 'denied',
-   analytics_storage: 'granted'
+   analytics_storage: 'denied',
+   wait_for_update: 500
   });
+  updateGoogleConsent('granted');
   window.gtag('js', new Date());
-  window.gtag('config', 'G-0PJNESSBXS', { anonymize_ip: true, allow_google_signals: false });
+  window.gtag('config', 'G-0PJNESSBXS', {
+   anonymize_ip: true,
+   allow_google_signals: false,
+   allow_ad_personalization_signals: false
+  });
   const script = document.createElement('script');
   script.async = true;
   script.dataset.emeraldAnalytics = 'true';
@@ -851,30 +896,44 @@ window.addEventListener('load', () => {
   document.head.appendChild(script);
  }
 
+ function deleteAnalyticsCookies() {
+  const cookieNames = document.cookie
+   .split(';')
+   .map(value => value.split('=')[0].trim())
+   .filter(name => name === '_gid' || name === '_gat' || name.startsWith('_ga'));
+  const domains = ['', `; Domain=${window.location.hostname}`, '; Domain=.emeraldgioielli.com'];
+
+  cookieNames.forEach((name) => {
+   domains.forEach((domain) => {
+    document.cookie = `${name}=; Max-Age=0; Path=/${domain}; SameSite=Lax`;
+   });
+  });
+ }
+
  function saveConsent(value) {
   const analyticsWasLoaded = Boolean(document.querySelector('script[data-emerald-analytics]'));
-  try { localStorage.setItem(consentKey, value); } catch (error) {}
+  writeConsentCookie(value);
+  try { localStorage.removeItem(legacyStorageKey); } catch (error) {}
   if (banner) banner.hidden = true;
-  if (value === 'accepted') {
+  showCurrentChoice(value);
+  if (value === 'analytics') {
    loadAnalytics();
-   updateGoogleConsent('granted');
   } else {
    updateGoogleConsent('denied');
-   ['_ga', '_gid', '_gat', '_ga_0PJNESSBXS'].forEach((name) => {
-    document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
-   });
+   deleteAnalyticsCookies();
    if (analyticsWasLoaded) window.location.reload();
   }
  }
 
- let consent = null;
- try { consent = localStorage.getItem(consentKey); } catch (error) {}
- if (consent === 'accepted') loadAnalytics();
+ const consent = readConsent();
+ showCurrentChoice(consent);
+ if (consent === 'analytics') loadAnalytics();
  else if (!consent && banner) banner.hidden = false;
 
- if (acceptButton) acceptButton.addEventListener('click', () => saveConsent('accepted'));
- if (rejectButton) rejectButton.addEventListener('click', () => saveConsent('rejected'));
+ if (acceptButton) acceptButton.addEventListener('click', () => saveConsent('analytics'));
+ if (rejectButton) rejectButton.addEventListener('click', () => saveConsent('necessary'));
  if (manageButton && banner) manageButton.addEventListener('click', () => {
+  showCurrentChoice(readConsent());
   banner.hidden = false;
   rejectButton?.focus();
  });

@@ -61,7 +61,7 @@ jobs:
           mkdir -p dist
           cp index.html script.js pricing.mjs style.css sitemap.xml robots.txt dist/
           mkdir -p dist/images
-          cp images/favicon.jpg images/logo-navbar.jpg dist/images/
+          cp images/favicon.jpg images/logo-navbar.png dist/images/
           cp -R data dist/
           if [ -f CNAME ]; then cp CNAME dist/; fi
           touch dist/.nojekyll

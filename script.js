@@ -264,9 +264,9 @@ function aggiornaSchedePrezzi() {
 }
 
 function getAssetLabel(asset) {
- if (asset === 'gold24') return 'Oro 24K';
+ if (asset === 'gold24') return 'Oro 24Kt';
  if (asset === 'silver800') return 'Argento 800';
- return 'Oro 18K';
+ return 'Oro 18Kt';
 }
 
 function aggiornaConversione() {
@@ -418,7 +418,7 @@ function setGoldView(asset) {
 
  animateMeasuredHeight(quoteStage || quoteGrid || goldPanel, () => {
   currentGoldAsset = nextGoldAsset;
-  // Il selettore 18K/24K in alto modifica solo la quotazione mostrata.
+  // Il selettore 18Kt/24Kt in alto modifica solo la quotazione mostrata.
   // Il materiale del calcolatore si seleziona direttamente nel calcolatore.
   aggiornaSelezioneInterfaccia();
  }, 'quote-resizing');
@@ -600,8 +600,8 @@ document.addEventListener('visibilitychange', () => {
  Il blocco viene centrato nello spazio realmente disponibile sotto la navbar;
  quando è più alto dello schermo viene allineato all'inizio, senza modificarne la scala. */
 const NAV_TARGET_HIGHLIGHT_CLASS = 'nav-target-highlight';
-const NAV_TARGET_HIGHLIGHT_MS = 2500;
-let navHighlightAnimation = null;
+const NAV_TARGET_HIGHLIGHT_MS = 900;
+let navHighlightTimeout = null;
 let navHighlightElement = null;
 let navScrollAnimationFrame = null;
 
@@ -630,9 +630,9 @@ function getNavHighlightTarget(targetId) {
 }
 
 function clearNavTargetHighlight() {
- if (navHighlightAnimation) {
- navHighlightAnimation.cancel();
- navHighlightAnimation = null;
+ if (navHighlightTimeout) {
+ window.clearTimeout(navHighlightTimeout);
+ navHighlightTimeout = null;
  }
 
  if (navHighlightElement) {
@@ -652,51 +652,11 @@ function highlightNavTarget(targetId) {
  clearNavTargetHighlight();
  element.classList.add(NAV_TARGET_HIGHLIGHT_CLASS);
  navHighlightElement = element;
-
- const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const computed = window.getComputedStyle(element);
- const baseBorderColor = computed.borderColor;
- const baseBoxShadow = computed.boxShadow === 'none' ? '0 18px 52px rgba(0,0,0,.42)' : computed.boxShadow;
- const baseFilter = computed.filter === 'none' ? 'brightness(1)' : computed.filter;
-
- if (reduceMotion || typeof element.animate !== 'function') {
- element.style.borderColor = '#ffe47f';
- element.style.boxShadow = `${baseBoxShadow}, 0 0 0 2px rgba(255,226,117,.60), 0 0 36px rgba(255,215,76,.58)`;
-
- window.setTimeout(() => {
- element.style.removeProperty('border-color');
- element.style.removeProperty('box-shadow');
+ navHighlightTimeout = window.setTimeout(() => {
  element.classList.remove(NAV_TARGET_HIGHLIGHT_CLASS);
  if (navHighlightElement === element) navHighlightElement = null;
+ navHighlightTimeout = null;
  }, NAV_TARGET_HIGHLIGHT_MS);
- return;
- }
-
- navHighlightAnimation = element.animate([
- { borderColor:baseBorderColor, boxShadow:baseBoxShadow, filter:baseFilter, offset:0 },
- {
- borderColor:'#ffe47f',
- boxShadow:`${baseBoxShadow}, 0 0 0 2px rgba(255,226,117,.58), 0 0 30px rgba(255,215,76,.62), 0 0 78px rgba(255,196,37,.34)`,
- filter:'brightness(1.10)',
- offset:.22
- },
- {
- borderColor:'#ffd75a',
- boxShadow:`${baseBoxShadow}, 0 0 0 2px rgba(255,229,132,.70), 0 0 38px rgba(255,213,68,.72), 0 0 92px rgba(255,188,25,.40)`,
- filter:'brightness(1.12)',
- offset:.58
- },
- { borderColor:baseBorderColor, boxShadow:baseBoxShadow, filter:baseFilter, offset:1 }
- ], {
- duration:NAV_TARGET_HIGHLIGHT_MS,
- easing:'cubic-bezier(.22,.8,.24,1)'
- });
-
- navHighlightAnimation.addEventListener('finish', () => {
- element.classList.remove(NAV_TARGET_HIGHLIGHT_CLASS);
- if (navHighlightElement === element) navHighlightElement = null;
- navHighlightAnimation = null;
- }, { once:true });
 }
 
 function waitForScrollThenHighlight(targetId, expectedTop) {

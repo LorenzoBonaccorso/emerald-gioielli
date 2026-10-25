@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import process from 'node:process';
+import { validateFx, publicUsdEur } from '../market-data.mjs';
 
 const TICKBASE_API_BASE = 'https://api.thetickbase.com/v1';
 const OUTPUT_FILE = new URL('../data/market-prices.json', import.meta.url);
@@ -28,17 +29,6 @@ async function requestJson(url, options = {}) {
  return data;
 }
 
-function positiveNumber(value, label) {
- const number = Number(value);
- if (!Number.isFinite(number) || number <= 0) throw new Error(`${label} non disponibile.`);
- return number;
-}
-
-function normalizeTimestamp(value) {
- const date = new Date(value);
- return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
-}
-
 async function getTickBaseUsdEur() {
  if (!isValidKey(apiKey)) throw new Error('TICKBASE_API_KEY non configurata.');
  const data = await requestJson(`${TICKBASE_API_BASE}/fx/latest?symbols=EUR`, {
@@ -48,42 +38,7 @@ async function getTickBaseUsdEur() {
    'User-Agent': 'EmeraldGioielli-GitHubActions/2.0'
   }
  });
- return {
-  value: positiveNumber(data?.rates?.EUR, 'Cambio USD/EUR TickBase'),
-  asOf: normalizeTimestamp(data?.as_of),
-  source: 'TickBase FX'
- };
-}
-
-async function getPublicUsdEur() {
- const providers = [
-  async () => {
-   const data = await requestJson('https://open.er-api.com/v6/latest/USD');
-   return {
-    value: positiveNumber(data?.rates?.EUR, 'Cambio USD/EUR open.er-api.com'),
-    asOf: normalizeTimestamp(Number(data?.time_last_update_unix) * 1000),
-    source: 'open.er-api.com'
-   };
-  },
-  async () => {
-   const data = await requestJson('https://api.frankfurter.app/latest?from=USD&to=EUR');
-   return {
-    value: positiveNumber(data?.rates?.EUR, 'Cambio USD/EUR Frankfurter'),
-    asOf: normalizeTimestamp(data?.date ? `${data.date}T16:00:00.000Z` : new Date()),
-    source: 'Frankfurter'
-   };
-  }
- ];
-
- const errors = [];
- for (const provider of providers) {
-  try {
-   return await provider();
-  } catch (error) {
-   errors.push(error instanceof Error ? error.message : String(error));
-  }
- }
- throw new Error(`Provider FX non disponibili: ${errors.join(' | ')}`);
+ return validateFx({ value: data?.rates?.EUR, asOf: data?.as_of, source: 'TickBase FX' });
 }
 
 async function getUsdEur() {
@@ -91,7 +46,7 @@ async function getUsdEur() {
   return await getTickBaseUsdEur();
  } catch (error) {
   console.warn(`TickBase non disponibile: ${error instanceof Error ? error.message : error}`);
-  return await getPublicUsdEur();
+  return await publicUsdEur(requestJson);
  }
 }
 

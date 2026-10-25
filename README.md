@@ -49,6 +49,8 @@ npm run check
 
 Il workflow usa il Secret GitHub `TICKBASE_API_KEY` per aggiornare il cambio USD/EUR senza esporre la chiave nel browser. Le quotazioni dei metalli vengono recuperate da Gold-API; se una fonte non è disponibile, il client prova le fonti di riserva e infine la cache locale recente.
 
+Il generatore e il browser verificano la data effettiva del cambio (`as_of`), non la data di creazione del file (`generated_at`). Dati senza data valida, futuri o più vecchi di quattro giorni vengono scartati; la finestra copre anche fine settimana e festività. Se TickBase restituisce un cambio vecchio, vengono provati open.er-api.com e Frankfurter. Il browser applica lo stesso controllo anche ai file già pubblicati e alle quotazioni dei metalli. La fonte mostrata corrisponde al cambio realmente utilizzato e “Dati di mercato al” indica la data più vecchia fra metalli e cambio. La cache locale di emergenza scade dopo tre ore e viene indicata come “ULTIMO DATO”.
+
 Il risultato del calcolatore è indicativo e non costituisce un’offerta vincolante. La proposta definitiva richiede la verifica del materiale in negozio.
 
 ## Pubblicazione

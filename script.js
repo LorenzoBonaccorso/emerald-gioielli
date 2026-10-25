@@ -3,11 +3,11 @@ import {
  SOGLIA_PROMO_GRAMMI,
  calcolaPrezziDaMercato
 } from './pricing.mjs';
+import { loadMarketData } from './market-data.mjs';
 
 /* Quotazioni oro e argento e calcolatore */
 const INTERVALLO_AGGIORNAMENTO_MS = 5 * 60 * 1000;
-const INTERVALLO_CAMBIO_STATICO_MS = 60 * 60 * 1000;
-const CACHE_KEY_PREZZI = 'emerald-metals-live-prices-v7';
+const CACHE_KEY_PREZZI = 'emerald-metals-live-prices-v8';
 const CACHE_MAX_AGE_MS = 3 * 60 * 60 * 1000;
 
 const priceGold18Element = document.getElementById('price-gold18');
@@ -58,112 +58,8 @@ async function fetchJsonWithTimeout(url, timeoutMs = 8000) {
  }
 }
 
-function parseMarketDate(value) {
- if (value === null || value === undefined || value === '') return new Date();
- if (typeof value === 'number') {
-  // Alcune API restituiscono timestamp in secondi, altre in millisecondi.
-  const ms = value < 1000000000000 ? value * 1000 : value;
-  const date = new Date(ms);
-  return Number.isNaN(date.getTime()) ? new Date() : date;
- }
- const date = new Date(value);
- return Number.isNaN(date.getTime()) ? new Date() : date;
-}
-
-async function caricaPrezzoMetalloGoldApi(symbol) {
- const data = await fetchJsonWithTimeout(`https://api.gold-api.com/price/${symbol}`);
- const price = Number(data && data.price);
- if (!Number.isFinite(price) || price <= 0) throw new Error(`Prezzo ${symbol} non disponibile`);
- return {
-  value: price,
-  asOf: parseMarketDate(data.timestamp || data.updatedAt || data.date || data.time),
-  source: `Gold-API ${symbol}`
- };
-}
-
-async function caricaMercatoDaTickBaseStatico() {
- // V83: il browser aggiorna oro e argento da Gold-API ogni 60 secondi.
- // Il file JSON contiene soprattutto il cambio USD/EUR TickBase, rigenerato da GitHub Actions ogni ora.
- // La chiave TickBase resta nei Secrets del repository e non arriva mai al browser.
- const cacheBuster = Math.floor(Date.now() / INTERVALLO_CAMBIO_STATICO_MS);
- const [data, oro, argento] = await Promise.all([
-  fetchJsonWithTimeout(`data/market-prices.json?v=${cacheBuster}`, 12000),
-  caricaPrezzoMetalloGoldApi('XAU'),
-  caricaPrezzoMetalloGoldApi('XAG')
- ]);
- const cambioUsdEur = Number(data && data.usd_eur);
- if (!data || data.success !== true || !Number.isFinite(cambioUsdEur) || cambioUsdEur <= 0) {
-  throw new Error((data && data.message) || 'Cambio TickBase non ancora disponibile');
- }
- const oroEurOncia = oro.value * cambioUsdEur;
- const argentoEurOncia = argento.value * cambioUsdEur;
- if (![oroEurOncia, argentoEurOncia].every(value => Number.isFinite(value) && value > 0)) {
-  throw new Error('Quotazioni Gold-API non valide');
- }
- const metalliAsOf = [oro.asOf, argento.asOf]
-  .filter(date => date instanceof Date && !Number.isNaN(date.getTime()))
-  .sort((a, b) => a.getTime() - b.getTime())[0] || new Date();
- return {
-  oroEurOncia,
-  argentoEurOncia,
-  asOf: metalliAsOf,
-  stale: Boolean(data.stale),
-  provider: 'Gold-API live + TickBase FX',
-  mode: 'spot'
- };
-}
-
-async function caricaCambioUsdEurFallback() {
- const providers = [
-  async () => {
-   const data = await fetchJsonWithTimeout('https://open.er-api.com/v6/latest/USD');
-   return Number(data && data.rates && data.rates.EUR);
-  },
-  async () => {
-   const data = await fetchJsonWithTimeout('https://api.frankfurter.app/latest?from=USD&to=EUR');
-   return Number(data && data.rates && data.rates.EUR);
-  }
- ];
-
- for (const provider of providers) {
-  try {
-   const rate = await provider();
-   if (Number.isFinite(rate) && rate > 0) return rate;
-  } catch (error) {
-   console.warn('Provider cambio di riserva non disponibile:', error);
-  }
- }
- throw new Error('Cambio USD/EUR non disponibile');
-}
-
-async function caricaPrezzoMetalloUsdOnciaFallback(symbol) {
- const metal = await caricaPrezzoMetalloGoldApi(symbol);
- return metal.value;
-}
-
-async function caricaMercatoFallback() {
- const [cambioUsdEur, prezzoOroUsdOncia, prezzoArgentoUsdOncia] = await Promise.all([
-  caricaCambioUsdEurFallback(),
-  caricaPrezzoMetalloUsdOnciaFallback('XAU'),
-  caricaPrezzoMetalloUsdOnciaFallback('XAG')
- ]);
- return {
-  oroEurOncia: prezzoOroUsdOncia * cambioUsdEur,
-  argentoEurOncia: prezzoArgentoUsdOncia * cambioUsdEur,
-  asOf: new Date(),
-  stale: false,
-  provider: 'Fonti di riserva',
-  mode: 'spot'
- };
-}
-
-async function caricaDatiMercato() {
- try {
-  return await caricaMercatoDaTickBaseStatico();
- } catch (error) {
-  console.warn('Cambio TickBase o metalli live non disponibili; uso fonti di riserva:', error);
-  return await caricaMercatoFallback();
- }
+function caricaDatiMercato() {
+ return loadMarketData(fetchJsonWithTimeout);
 }
 
 function formatEuro(value, minDigits = 2, maxDigits = 2) {
@@ -218,7 +114,8 @@ function caricaPrezziDaCache() {
  const cached = JSON.parse(raw);
  const cachedAt = Number(cached && (cached.cachedAt || cached.timestamp));
  const sourceTimestamp = Number(cached && (cached.sourceTimestamp || cached.timestamp || cachedAt));
- const isFresh = Number.isFinite(cachedAt) && (Date.now() - cachedAt) <= CACHE_MAX_AGE_MS;
+ const cacheAge = Date.now() - cachedAt;
+ const isFresh = Number.isFinite(cacheAge) && cacheAge >= 0 && cacheAge <= CACHE_MAX_AGE_MS;
  const valuesValid = cached && [cached.prezzo24, cached.standard18, cached.promo18, cached.argento800].every(Number.isFinite);
  if (!isFresh || !valuesValid) return false;
  prezzoOroPuroEurGrammo = cached.prezzo24;
@@ -242,10 +139,11 @@ function aggiornaStatoLive() {
  ? ultimoAggiornamentoPrezzo.toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'medium' })
  : '--:--:--';
  }
- if (liveTextElement) liveTextElement.textContent = usingCachedPrices ? 'ULTIMO DATO' : 'AGGIORNATO';
+ const hasPrices = Number.isFinite(prezzoOroPuroEurGrammo);
+ if (liveTextElement) liveTextElement.textContent = !hasPrices ? 'DATI NON DISPONIBILI' : usingCachedPrices ? 'ULTIMO DATO' : 'AGGIORNATO';
  if (sourceElement) sourceElement.textContent = currentMarketSource;
  if (liveBadgeElement) {
-  liveBadgeElement.classList.toggle('cached', usingCachedPrices);
+  liveBadgeElement.classList.toggle('cached', usingCachedPrices || !hasPrices);
   const modeLabel = currentPriceMode === 'bid' ? 'prezzo bid' : 'prezzo spot';
   liveBadgeElement.title = `${currentMarketSource} · ${modeLabel}`;
  }
@@ -458,11 +356,15 @@ async function aggiornaPrezziLive() {
    salvaPrezziInCache();
   } catch (error) {
    console.warn('Aggiornamento prezzi non disponibile:', error);
-   if (![prezzoOroPuroEurGrammo, prezzoPromo18EurGrammo, prezzoArgento800EurGrammo].every(Number.isFinite)) {
-    caricaPrezziDaCache();
-   } else {
-    usingCachedPrices = true;
+   if (!caricaPrezziDaCache()) {
+    prezzoOroPuroEurGrammo = null;
+    prezzoStandard18EurGrammo = null;
+    prezzoPromo18EurGrammo = null;
+    prezzoArgento800EurGrammo = null;
+    ultimoAggiornamentoPrezzo = null;
+    currentMarketSource = 'Dati non disponibili';
    }
+   usingCachedPrices = true;
   }
   aggiornaVistaPrezzi();
  } finally {

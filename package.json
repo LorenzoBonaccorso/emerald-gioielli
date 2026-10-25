@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check script.js && node --check scripts/update-market-prices.mjs"
+    "check": "node --check script.js && node --check market-data.mjs && node --check scripts/update-market-prices.mjs"
   },
   "engines": {
     "node": ">=24"

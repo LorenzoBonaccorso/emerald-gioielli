@@ -59,7 +59,7 @@ jobs:
       - name: Prepara i file pubblici
         run: |
           mkdir -p dist
-          cp index.html script.js pricing.mjs style.css sitemap.xml robots.txt dist/
+          cp index.html script.js pricing.mjs market-data.mjs style.css sitemap.xml robots.txt dist/
           mkdir -p dist/images
           cp images/favicon.jpg images/logo-navbar.png dist/images/
           cp -R data dist/

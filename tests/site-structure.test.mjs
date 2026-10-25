@@ -37,6 +37,7 @@ test('il deployment include robots, sitemap e moduli applicativi', async () => {
  assert.match(workflow, /sitemap\.xml/);
  assert.match(workflow, /robots\.txt/);
  assert.match(workflow, /pricing\.mjs/);
+ assert.match(workflow, /market-data\.mjs/);
  assert.match(workflow, /images\/logo-navbar\.png/);
 });
 

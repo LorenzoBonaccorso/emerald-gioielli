@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import process from 'node:process';
-import { validateFx, publicUsdEur } from '../market-data.mjs';
+import { validateFx, publicUsdEur, loadMarketData } from '../market-data.mjs';
+import { createQuoteSnapshot } from '../quote-snapshot.mjs';
 
 const TICKBASE_API_BASE = 'https://api.thetickbase.com/v1';
 const OUTPUT_FILE = new URL('../data/market-prices.json', import.meta.url);
@@ -51,7 +52,6 @@ async function getUsdEur() {
 }
 
 async function main() {
- await mkdir(new URL('../data/', import.meta.url), { recursive: true });
  const fx = await getUsdEur();
  const payload = {
   success: true,
@@ -61,11 +61,16 @@ async function main() {
   generated_at: new Date().toISOString(),
   stale: false
  };
+ // Riusa gli stessi controlli e la stessa conversione del browser, senza richieste FX duplicate.
+ const market = await loadMarketData(url => url.startsWith('data/') ? Promise.resolve(payload) : requestJson(url));
+ const snapshot = createQuoteSnapshot(market);
+ await mkdir(new URL('../data/', import.meta.url), { recursive: true });
  await writeFile(OUTPUT_FILE, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
- console.log(`Cambio aggiornato: ${fx.value} EUR per USD - ${fx.source}`);
+ await writeFile(new URL('../data/metal-prices.json', import.meta.url), `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
+ console.log(`Cambio e metalli aggiornati: ${fx.value} EUR per USD - ${market.provider}`);
 }
 
 main().catch((error) => {
- console.error(`Aggiornamento cambio fallito: ${error instanceof Error ? error.message : error}`);
+ console.error(`Aggiornamento quotazioni fallito: ${error instanceof Error ? error.message : error}`);
  process.exitCode = 1;
 });

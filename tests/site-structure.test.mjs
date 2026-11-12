@@ -32,13 +32,13 @@ test('la preferenza cookie è revocabile e Analytics resta opzionale', async () 
  assert.match(script, /if \(consent === 'analytics'\) loadAnalytics\(\)/);
 });
 
-test('il deployment include robots, sitemap e moduli applicativi', async () => {
+test('il deployment installa le dipendenze e genera le quotazioni prima della pubblicazione', async () => {
  const workflow = await read('.github/workflows/update-market-prices.yml');
- assert.match(workflow, /sitemap\.xml/);
- assert.match(workflow, /robots\.txt/);
- assert.match(workflow, /pricing\.mjs/);
- assert.match(workflow, /market-data\.mjs/);
- assert.match(workflow, /images\/logo-navbar\.png/);
+ assert.match(workflow, /npm ci/);
+ assert.match(workflow, /node scripts\/update-market-prices\.mjs/);
+ assert.match(workflow, /npm run build/);
+ assert.ok(workflow.indexOf('run: node scripts/update-market-prices.mjs') < workflow.indexOf('run: npm run build'));
+ assert.match(workflow, /path: dist/);
 });
 
 test('robots indica la sitemap canonica', async () => {

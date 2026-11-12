@@ -4,9 +4,14 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check script.js && node --check market-data.mjs && node --check scripts/update-market-prices.mjs"
+    "check": "node --check script.js && node --check market-data.mjs && node --check quote-snapshot.mjs && node --check scripts/update-market-prices.mjs && node --check scripts/build-site.mjs",
+    "market:update": "node scripts/update-market-prices.mjs",
+    "build": "node scripts/build-site.mjs"
   },
   "engines": {
     "node": ">=24"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Installa le dipendenze di build
+        run: npm ci
+
       - name: Esegui i controlli automatici
         run: npm test && npm run check
 
@@ -51,20 +54,16 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Aggiorna il cambio USD/EUR
+      - name: Installa le dipendenze di build
+        run: npm ci
+
+      - name: Aggiorna cambio e quotazioni dei metalli
         env:
           TICKBASE_API_KEY: ${{ secrets.TICKBASE_API_KEY }}
         run: node scripts/update-market-prices.mjs
 
-      - name: Prepara i file pubblici
-        run: |
-          mkdir -p dist
-          cp index.html script.js pricing.mjs market-data.mjs style.css sitemap.xml robots.txt dist/
-          mkdir -p dist/images
-          cp images/favicon.jpg images/logo-navbar.png dist/images/
-          cp -R data dist/
-          if [ -f CNAME ]; then cp CNAME dist/; fi
-          touch dist/.nojekyll
+      - name: Genera quotazioni HTML e script unico
+        run: npm run build
 
       - name: Configura GitHub Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b

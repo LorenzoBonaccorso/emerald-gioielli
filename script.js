@@ -1,14 +1,12 @@
 import {
- TROY_OUNCE_GRAMS,
- SOGLIA_PROMO_GRAMMI,
- calcolaPrezziDaMercato
+ SOGLIA_PROMO_GRAMMI
 } from './pricing.mjs';
 import { loadMarketData } from './market-data.mjs';
+import { createQuoteSnapshot, readQuoteSnapshot, latestValidSnapshot } from './quote-snapshot.mjs';
 
 /* Quotazioni oro e argento e calcolatore */
 const INTERVALLO_AGGIORNAMENTO_MS = 5 * 60 * 1000;
-const CACHE_KEY_PREZZI = 'emerald-metals-live-prices-v8';
-const CACHE_MAX_AGE_MS = 3 * 60 * 60 * 1000;
+const CACHE_KEY_PREZZI = 'emerald-metals-live-prices-v9';
 
 const priceGold18Element = document.getElementById('price-gold18');
 const priceGold24Element = document.getElementById('price-gold24');
@@ -45,6 +43,7 @@ let currentGoldAsset = 'gold18';
 let usingCachedPrices = false;
 let currentMarketSource = 'Dati di mercato';
 let currentPriceMode = 'spot';
+let inMemorySnapshot = null;
 
 async function fetchJsonWithTimeout(url, timeoutMs = 8000) {
  const controller = new AbortController();
@@ -89,54 +88,39 @@ function getPrezzoAssetPerGrammi(asset, grammi) {
  return isPromoApplicabile(grammi) ? prezzoPromo18EurGrammo : prezzoStandard18EurGrammo;
 }
 
-function salvaPrezziInCache() {
- if (![prezzoOroPuroEurGrammo, prezzoStandard18EurGrammo, prezzoPromo18EurGrammo, prezzoArgento800EurGrammo].every(Number.isFinite)) return;
- try {
- localStorage.setItem(CACHE_KEY_PREZZI, JSON.stringify({
- cachedAt: Date.now(),
- sourceTimestamp: ultimoAggiornamentoPrezzo instanceof Date ? ultimoAggiornamentoPrezzo.getTime() : Date.now(),
- prezzo24: prezzoOroPuroEurGrammo,
- standard18: prezzoStandard18EurGrammo,
- promo18: prezzoPromo18EurGrammo,
- argento800: prezzoArgento800EurGrammo,
- source: currentMarketSource,
- priceMode: currentPriceMode
- }));
- } catch (error) {
- console.warn('Cache prezzi non salvata:', error);
- }
+function applicaQuotazione(snapshot, cached) {
+ const quote = readQuoteSnapshot(snapshot);
+ prezzoOroPuroEurGrammo = quote.gold24;
+ prezzoStandard18EurGrammo = quote.standard18;
+ prezzoPromo18EurGrammo = quote.promo18;
+ prezzoArgento800EurGrammo = quote.argento800;
+ ultimoAggiornamentoPrezzo = quote.asOf;
+ currentMarketSource = quote.provider;
+ currentPriceMode = quote.mode;
+ usingCachedPrices = cached;
+ inMemorySnapshot = snapshot;
 }
 
-function caricaPrezziDaCache() {
+function caricaPrezziDiRiserva() {
+ const snapshots = [inMemorySnapshot];
  try {
- const raw = localStorage.getItem(CACHE_KEY_PREZZI);
- if (!raw) return false;
- const cached = JSON.parse(raw);
- const cachedAt = Number(cached && (cached.cachedAt || cached.timestamp));
- const sourceTimestamp = Number(cached && (cached.sourceTimestamp || cached.timestamp || cachedAt));
- const cacheAge = Date.now() - cachedAt;
- const isFresh = Number.isFinite(cacheAge) && cacheAge >= 0 && cacheAge <= CACHE_MAX_AGE_MS;
- const valuesValid = cached && [cached.prezzo24, cached.standard18, cached.promo18, cached.argento800].every(Number.isFinite);
- if (!isFresh || !valuesValid) return false;
- prezzoOroPuroEurGrammo = cached.prezzo24;
- prezzoStandard18EurGrammo = cached.standard18;
- prezzoPromo18EurGrammo = cached.promo18;
- prezzoArgento800EurGrammo = cached.argento800;
- ultimoAggiornamentoPrezzo = new Date(sourceTimestamp);
- currentMarketSource = cached.source || 'Ultimo dato salvato';
- currentPriceMode = cached.priceMode || 'spot';
- usingCachedPrices = true;
+  const raw = document.getElementById('initial-market-data')?.textContent;
+  if (raw) snapshots.push(JSON.parse(raw));
+ } catch { /* I dati incorporati non sostituiscono mai i controlli di validità. */ }
+ try {
+  const raw = localStorage.getItem(CACHE_KEY_PREZZI);
+  if (raw) snapshots.push(JSON.parse(raw));
+ } catch { /* Funziona anche con memoria locale bloccata. */ }
+ const snapshot = latestValidSnapshot(snapshots);
+ if (!snapshot) return false;
+ applicaQuotazione(snapshot, true);
  return true;
- } catch (error) {
- console.warn('Cache prezzi non leggibile:', error);
- return false;
- }
 }
 
 function aggiornaStatoLive() {
  if (updatedElement) {
  updatedElement.textContent = ultimoAggiornamentoPrezzo instanceof Date && !Number.isNaN(ultimoAggiornamentoPrezzo.getTime())
- ? ultimoAggiornamentoPrezzo.toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'medium' })
+ ? ultimoAggiornamentoPrezzo.toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'medium', timeZone: 'Europe/Rome' })
  : '--:--:--';
  }
  const hasPrices = Number.isFinite(prezzoOroPuroEurGrammo);
@@ -337,26 +321,12 @@ async function aggiornaPrezziLive() {
  try {
   try {
    const mercato = await caricaDatiMercato();
-   const nuovoPrezzo24 = mercato.oroEurOncia / TROY_OUNCE_GRAMS;
-   const nuovoPrezzoArgentoPuro = mercato.argentoEurOncia / TROY_OUNCE_GRAMS;
-   if (![nuovoPrezzo24, nuovoPrezzoArgentoPuro].every(value => Number.isFinite(value) && value > 0)) {
-    throw new Error('Dati di mercato non validi');
-   }
-   const prezzi = calcolaPrezziDaMercato(nuovoPrezzo24, nuovoPrezzoArgentoPuro);
-   prezzoOroPuroEurGrammo = nuovoPrezzo24;
-   prezzoStandard18EurGrammo = prezzi.standard18;
-   prezzoPromo18EurGrammo = prezzi.promo18;
-   prezzoArgento800EurGrammo = prezzi.argento800;
-   ultimoAggiornamentoPrezzo = mercato.asOf instanceof Date && !Number.isNaN(mercato.asOf.getTime())
-    ? mercato.asOf
-    : new Date();
-   currentMarketSource = mercato.provider;
-   currentPriceMode = mercato.mode;
-   usingCachedPrices = Boolean(mercato.stale);
-   salvaPrezziInCache();
+   const snapshot = createQuoteSnapshot(mercato);
+   applicaQuotazione(snapshot, false);
+   try { localStorage.setItem(CACHE_KEY_PREZZI, JSON.stringify(snapshot)); } catch { /* Cache opzionale. */ }
   } catch (error) {
    console.warn('Aggiornamento prezzi non disponibile:', error);
-   if (!caricaPrezziDaCache()) {
+   if (!caricaPrezziDiRiserva()) {
     prezzoOroPuroEurGrammo = null;
     prezzoStandard18EurGrammo = null;
     prezzoPromo18EurGrammo = null;
@@ -489,7 +459,7 @@ if (calculatorToggle && calculatorPanel) {
 
 if (gramsInput) gramsInput.addEventListener('input', aggiornaConversione);
 
-caricaPrezziDaCache();
+caricaPrezziDiRiserva();
 aggiornaVistaPrezzi();
 aggiornaPrezziLive();
 window.setInterval(() => aggiornaPrezziLive(), INTERVALLO_AGGIORNAMENTO_MS);

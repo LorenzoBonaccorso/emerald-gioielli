@@ -13,15 +13,16 @@ const market = { oroEurOncia: 100 * TROY_OUNCE_GRAMS, argentoEurOncia: 2 * TROY_
 const snapshot = createQuoteSnapshot(market, now);
 const template = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 
-test('le quotazioni HTML sono leggibili senza eseguire JavaScript e mantengono fonte e data reali', () => {
+test('le quotazioni HTML sono leggibili senza JavaScript e mantengono i metadati nel JSON incorporato', () => {
  const html = renderQuoteHtml(template, snapshot, now);
  assert.match(html, /id="price-gold24"[^>]*>100,00</);
  assert.match(html, /id="price-gold18"[^>]*>67,1</);
  assert.match(html, /id="price-silver800"[^>]*>1,05</);
  assert.match(html, /Sotto i 30 grammi: 64,1 €/);
  assert.match(html, /id="metal-total">64,1 €/);
- assert.match(html, /id="metals-source">Gold-API \+ Test FX</);
- assert.match(html, /id="metals-updated"[^>]*>12\/11\/26, 01:00:00</);
+ const initialData = JSON.parse(html.match(/id="initial-market-data">([^]*?)<\/script>/)[1]);
+ assert.equal(initialData.market.provider, market.provider);
+ assert.equal(initialData.market.asOf, market.asOf.replace('Z', '.000Z'));
  assert.match(html, /QUOTAZIONE PUBBLICATA/);
  assert.doesNotMatch(html, /--,--|--:--:--/);
 });
@@ -45,7 +46,7 @@ test('la riserva sceglie il dato valido più recente e non rinnova la sua scaden
 test('fonte e JSON incorporato non possono chiudere un tag script', () => {
  const malicious = createQuoteSnapshot({ ...market, provider: '</script><img src=x onerror=alert(1)>' }, now);
  const html = renderQuoteHtml(template, malicious, now);
- assert.match(html, /&lt;\/script&gt;&lt;img/);
+ assert.doesNotMatch(html, /<img src=x onerror=/);
  const json = html.match(/id="initial-market-data">([^]*?)<\/script>/)[1];
  assert.doesNotMatch(json, /</);
  assert.equal(JSON.parse(json).market.provider, malicious.market.provider);
@@ -66,7 +67,7 @@ test('il pacchetto pubblico contiene un solo script senza import remoti e funzio
  const code = await readFile(join(directory, filename), 'utf8');
  const compiled = new vm.Script(code);
  const elements = new Map();
- for (const id of ['price-gold18', 'price-gold24', 'price-silver800', 'metals-updated', 'metals-source', 'metals-live-text', 'metal-total', 'converter-note', 'metal-grams']) {
+ for (const id of ['price-gold18', 'price-gold24', 'price-silver800', 'metals-live-text', 'metal-total', 'converter-note', 'metal-grams']) {
   elements.set(id, { textContent: '', value: '1', addEventListener() {} });
  }
  elements.set('initial-market-data', { textContent: JSON.stringify(snapshot) });

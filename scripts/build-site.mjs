@@ -19,8 +19,6 @@ export function renderQuoteHtml(template, snapshot, now = Date.now()) {
   'gold18-offer-title': `Offerta ${euro(quote.promo18, 1)} €/g per almeno ${SOGLIA_PROMO_GRAMMI} grammi`,
   'gold18-offer-text': `Sotto i ${SOGLIA_PROMO_GRAMMI} grammi: ${euro(quote.standard18, 1)} €/g. Prezzi già comprensivi delle commissioni.`,
   'metals-live-text': 'QUOTAZIONE PUBBLICATA',
-  'metals-updated': quote.asOf.toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'medium', timeZone: 'Europe/Rome' }),
-  'metals-source': quote.provider,
   'metal-total': `${euro(quote.standard18, 1)} €`,
   'converter-note': `Prezzo sotto soglia: ${euro(quote.standard18, 1)} €/g. Offerta da ${SOGLIA_PROMO_GRAMMI} g: ${euro(quote.promo18, 1)} €/g.`
  };

@@ -11,8 +11,6 @@ const CACHE_KEY_PREZZI = 'emerald-metals-live-prices-v9';
 const priceGold18Element = document.getElementById('price-gold18');
 const priceGold24Element = document.getElementById('price-gold24');
 const priceSilver800Element = document.getElementById('price-silver800');
-const updatedElement = document.getElementById('metals-updated');
-const sourceElement = document.getElementById('metals-source');
 const liveBadgeElement = document.getElementById('metals-live-badge');
 const liveTextElement = document.getElementById('metals-live-text');
 const gramsInput = document.getElementById('metal-grams');
@@ -37,7 +35,6 @@ let prezzoStandard18EurGrammo = null;
 let prezzoPromo18EurGrammo = null;
 let prezzoOroPuroEurGrammo = null;
 let prezzoArgento800EurGrammo = null;
-let ultimoAggiornamentoPrezzo = null;
 let currentAsset = 'gold18';
 let currentGoldAsset = 'gold18';
 let usingCachedPrices = false;
@@ -94,7 +91,6 @@ function applicaQuotazione(snapshot, cached) {
  prezzoStandard18EurGrammo = quote.standard18;
  prezzoPromo18EurGrammo = quote.promo18;
  prezzoArgento800EurGrammo = quote.argento800;
- ultimoAggiornamentoPrezzo = quote.asOf;
  currentMarketSource = quote.provider;
  currentPriceMode = quote.mode;
  usingCachedPrices = cached;
@@ -118,14 +114,8 @@ function caricaPrezziDiRiserva() {
 }
 
 function aggiornaStatoLive() {
- if (updatedElement) {
- updatedElement.textContent = ultimoAggiornamentoPrezzo instanceof Date && !Number.isNaN(ultimoAggiornamentoPrezzo.getTime())
- ? ultimoAggiornamentoPrezzo.toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'medium', timeZone: 'Europe/Rome' })
- : '--:--:--';
- }
  const hasPrices = Number.isFinite(prezzoOroPuroEurGrammo);
  if (liveTextElement) liveTextElement.textContent = !hasPrices ? 'DATI NON DISPONIBILI' : usingCachedPrices ? 'ULTIMO DATO' : 'AGGIORNATO';
- if (sourceElement) sourceElement.textContent = currentMarketSource;
  if (liveBadgeElement) {
   liveBadgeElement.classList.toggle('cached', usingCachedPrices || !hasPrices);
   const modeLabel = currentPriceMode === 'bid' ? 'prezzo bid' : 'prezzo spot';
@@ -331,7 +321,6 @@ async function aggiornaPrezziLive() {
     prezzoStandard18EurGrammo = null;
     prezzoPromo18EurGrammo = null;
     prezzoArgento800EurGrammo = null;
-    ultimoAggiornamentoPrezzo = null;
     currentMarketSource = 'Dati non disponibili';
    }
    usingCachedPrices = true;
